@@ -27,18 +27,16 @@ function search(line){
     newlineOut("}");
     forCiklusbanVan=false;
   }
-  else if(forCiklusbanVan || ifbenVan){
-    newlineOut('&#8194'+line);
-  }else{
+  else{
     for(i=0;i<line.split(' ').length;i++){
       let kifejezes=line.split(' ')[i];
       if(kifejezes==='ciklus'){
         sor=forciklus(line.split(' ')[++i]);
         newlineOut(sor)
         forCiklusbanVan=true;
-        
+        break;
       }
-      if(kifejezes==='be:'){
+      else if(kifejezes==='be:'){
         valtozok=valtozokBe(line);
         let valtKiir=''
         for (let [key, value] of Object.entries(valtozok)) {
@@ -52,11 +50,17 @@ function search(line){
         }
         valtozokErtekKiir(valtozok);
       });
+      break;
     }
-    if(kifejezes==='ha'){
+    else if(kifejezes==='ha'){
         feltetel(line);
         ifbenVan=true;
+        break;
+    }else {
+      newlineOut('&#8194'+line);
+      break;
     }
+    
     
   }
 }
