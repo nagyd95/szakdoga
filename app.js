@@ -3,6 +3,29 @@ let forCiklusbanVan=false;
 let ifbenVan=false;
 let valtozok={};
 let valtozokBeker={};
+
+document.getElementById('futtat').addEventListener('click',function(e){
+  javaScriptkod=document.getElementById('eredmeny').innerHTML;
+  javaScriptkod=javaScriptkod.replaceAll("<br>",'\n');
+  javaScriptkodSorok=javaScriptkod.trim().split('\n');
+ 
+  for(let i=0;i<javaScriptkodSorok.length;i++){
+    
+    if(javaScriptkodSorok[i].split(' ')[0]==="while("){
+      whileciklis="";
+      do{
+        //console.log(javaScriptkodSorok[i].trim().split(' '));
+        whileciklis+=javaScriptkodSorok[i].trim()+" \n";
+        i++;
+        
+      }while(javaScriptkodSorok[i].trim()!=="}")
+      createWhileCiklus(whileciklis);
+      //createWhileCiklus(javaScriptkodSorok[i]);
+    }
+  }
+  e.preventDefault();
+});
+
 document.getElementById('ok').addEventListener('click',function(e){
 
   document.getElementById("eredmeny").innerHTML='';
@@ -16,6 +39,63 @@ document.getElementById('ok').addEventListener('click',function(e){
   e.preventDefault();
 });
 
+function createWhileCiklus(line){
+  belseje="";
+  let bentivaltozok={};
+  lines=line.replaceAll(" = ","===")
+  lines=lines.replaceAll("&lt;","<")
+  lines=lines.replaceAll("&gt;",">")
+  lines=lines.split("\n")
+  let feltetel="";
+  for(lin in lines){
+    szavak=lines[lin].split(" ");
+    if(szavak[0].trim()==="while("){
+      feltetel=szavak[1];
+      for(s in szavak){
+        if(szavak[s].trim()==="while(" || szavak[s]==="{"){}
+        else{
+          for(q in szavak[s]){
+            for(a in valtozok){
+              if(szavak[s][q]===a){
+                eval("var "+a +"="+valtozok[a]);
+                bentivaltozok[a]=eval(valtozok[a]);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }else{
+      for(s in szavak){
+        belseje+=szavak[s];
+      }
+    }
+  }
+  console.log(feltetel);
+   while(eval(feltetel)){
+    eval(belseje);
+    wait(1000);
+    for(k in belseje){
+      for(a in bentivaltozok){
+        if(belseje[k]===a){
+          bentivaltozok[belseje[k]]=eval(belseje[k]);
+          valtozok[a]=bentivaltozok[a];
+          valtozokErtekKiir(valtozok);
+          console.log(bentivaltozok);
+          
+        }
+      }
+    }    
+  }
+}
+
+function wait(ms){
+  var start = new Date().getTime();
+  var end = start;
+  while(end < start + ms) {
+    end = new Date().getTime();
+  }
+}
 
 function search(line){
   
@@ -36,7 +116,6 @@ function search(line){
         kifejezes=line.split(' ')[++i];
         if(kifejezes==='amíg' ){
           sor=whileCiklisFromInput(line);
-          
           newlineOut(sor);
         }else{
         sor=forciklusFromInput(line);
@@ -76,7 +155,7 @@ function search(line){
         break;
     }
     else if(kifejezes==='különben'){
-      newlineOut('}<br>else{')
+      newlineOut('}<br>else {')
       break;
     }
     else if(line.includes(":=")){
@@ -93,8 +172,12 @@ function search(line){
 }
 }
 function whileCiklisFromInput(line){
+  line=line.replaceAll("=","===")
+  line=line.replaceAll("<","&lt;")
+  //line=line.replaceAll(">","&rt;")
   const a=line.split(" ");
-  let out='while(';
+  let out='while( ';
+  
   for(let i=2;i<a.length;i++){
     if(a[i]==='és'){
       out+=' && ';
@@ -105,7 +188,8 @@ function whileCiklisFromInput(line){
       out+=a[i];
     }
   }
-    out+="){";
+  
+    out+=" ) {";  
     return out;
 }
 function arrayConcatination(valt,valt2){
@@ -129,9 +213,8 @@ function valtozokFromTextarea(line){
   valtozokErtekKiir(valtozok);
 }
 
-
 function feltetelElseIfFromInput(line){
-  let out=`}<br>else if (`;
+  let out=`}<br> else if (`;
   line=line.replaceAll("=","===")
   sor=line.split(' ');
   for(let i=2;i<sor.length;i++){
@@ -172,7 +255,7 @@ function forciklusFromInput(text){
   
   const b=text.split(" ");
   const iterator=b[0];
-  let sor=`for(${iterator}${b[1]}`;
+  let sor=`for (${iterator}${b[1]}`;
   
   sor+=b[2]+`; ${iterator}<`;
   
@@ -196,7 +279,7 @@ function newlineOut(sor){
   let kiir=document.getElementById("eredmeny").innerHTML;
   kiir+=`<br> ${sor}`;
   document.getElementById("eredmeny").innerHTML=kiir;
-  //console.log(sor);
+  
 }
 function valtozokErtekBeker(valtozok){
   for (let [key, value] of Object.entries(valtozok)) {
@@ -230,6 +313,7 @@ function valtozokErtekKiir(valtozok){
     }
   } 
   document.getElementById("valtozok").innerHTML=out;
+  
 }
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
