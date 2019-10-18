@@ -7,21 +7,41 @@ let valtozokBeker={};
 document.getElementById('futtat').addEventListener('click',function(e){
   javaScriptkod=document.getElementById('eredmeny').innerHTML;
   javaScriptkod=javaScriptkod.replaceAll("<br>",'\n');
-  javaScriptkodSorok=javaScriptkod.trim().split('\n');
+  javaScriptkodSorok=javaScriptkod.split('\n');
+  
  
   for(let i=0;i<javaScriptkodSorok.length;i++){
-    
+    //console.log(javaScriptkodSorok[i].trim().split(' ')[0]);
     if(javaScriptkodSorok[i].split(' ')[0]==="while("){
-      whileciklis="";
+      whileCiklus="";
       do{
-        //console.log(javaScriptkodSorok[i].trim().split(' '));
-        whileciklis+=javaScriptkodSorok[i].trim()+" \n";
+        console.log(javaScriptkodSorok[i].trim().split(' '));
+        whileCiklus+=javaScriptkodSorok[i].trim()+" \n";
         i++;
         
       }while(javaScriptkodSorok[i].trim()!=="}")
-      createWhileCiklus(whileciklis);
-      //createWhileCiklus(javaScriptkodSorok[i]);
+      createWhileCiklus(whileCiklus);
+      
+    }else if(javaScriptkodSorok[i].trim().split(' ')[0]==="if"){
+      elagazas="";
+      megyMeg=true;
+      utolso=false;
+      while(megyMeg){
+        elagazas+=javaScriptkodSorok[i].trim()+" \n";
+        i++;
+        a=i;
+        b=a
+        if(++b===javaScriptkodSorok.length ||(javaScriptkodSorok[a].trim().split(' ')[0]==="}"&&javaScriptkodSorok[++a].trim().split(' ')[0]!=="else")){
+           megyMeg=false;
+           elagazas+=javaScriptkodSorok[i].trim()+" \n";
+         }
+        
+       
+      }
+      //console.log(elagazas);
+      createIfElse(elagazas);
     }
+    
   }
   e.preventDefault();
 });
@@ -71,7 +91,6 @@ function createWhileCiklus(line){
       }
     }
   }
-  console.log(feltetel);
    while(eval(feltetel)){
     eval(belseje);
     wait(1000);
@@ -80,15 +99,58 @@ function createWhileCiklus(line){
         if(belseje[k]===a){
           bentivaltozok[belseje[k]]=eval(belseje[k]);
           valtozok[a]=bentivaltozok[a];
-          valtozokErtekKiir(valtozok);
-          console.log(bentivaltozok);
-          
+          valtozokErtekKiir(valtozok); 
         }
       }
     }    
   }
 }
 
+function createIfElse(line){
+  belseje="";
+  let bentivaltozok={};
+  lines=line.split("\n")
+  feltetel="";
+  for(lin in lines){
+    szavak=lines[lin].split(" ");
+      for(s in szavak){
+        if(s!=="if"|| s!=="else"|| s!=="{"||s!=="}"){
+          for(q in szavak[s]){
+            for(a in valtozok){
+              if(szavak[s][q]===a){
+                eval("var "+a +"="+valtozok[a]);
+                bentivaltozok[a]=eval(valtozok[a]);
+                
+                break;
+            }
+          }
+        }
+      }
+    
+    }
+    if(lines[lin].includes("if")|| lines[lin].includes("else")){
+      feltetel+=lines[lin]+"\n";
+      feltetel+=("wait(3000);\n");
+      feltetel+=`console.log("${lines[lin]}");\n`
+    }
+    else{feltetel+=lines[lin]+"\n";}
+    
+  }
+  
+  console.log(feltetel)
+  eval(feltetel);
+  for(k in feltetel){
+    for(a in bentivaltozok){
+      if(feltetel[k]===a){
+        bentivaltozok[feltetel[k]]=eval(feltetel[k]);
+        valtozok[a]=bentivaltozok[a];
+        valtozokErtekKiir(valtozok); 
+      }
+    }
+  }    
+
+
+}
 function wait(ms){
   var start = new Date().getTime();
   var end = start;
@@ -163,7 +225,7 @@ function search(line){
       break;
     }
     else {
-      newlineOut('&#8194'+line);
+      newlineOut('&#8194'+line+";");
       break;
     }
   
@@ -174,7 +236,7 @@ function search(line){
 function whileCiklisFromInput(line){
   line=line.replaceAll("=","===")
   line=line.replaceAll("<","&lt;")
-  //line=line.replaceAll(">","&rt;")
+  line=line.replaceAll(">","&gt;")
   const a=line.split(" ");
   let out='while( ';
   
@@ -216,6 +278,8 @@ function valtozokFromTextarea(line){
 function feltetelElseIfFromInput(line){
   let out=`}<br> else if (`;
   line=line.replaceAll("=","===")
+  line=line.replaceAll("<","&lt;")
+  line=line.replaceAll(">","&gt;")
   sor=line.split(' ');
   for(let i=2;i<sor.length;i++){
     if(sor[i]==='és'){
@@ -232,6 +296,8 @@ function feltetelElseIfFromInput(line){
 }
 function feltetelFromInput(line){
   line=line.replaceAll("=","===")
+  line=line.replaceAll("<","&lt;")
+  line=line.replaceAll(">","&gt;")
   let out=`if (`;
   sor=line.split(' ');
   
