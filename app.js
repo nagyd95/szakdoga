@@ -11,11 +11,11 @@ document.getElementById('futtat').addEventListener('click',function(e){
   
  
   for(let i=0;i<javaScriptkodSorok.length;i++){
-    //console.log(javaScriptkodSorok[i].trim().split(' ')[0]);
-    if(javaScriptkodSorok[i].split(' ')[0]==="while("){
+    if(javaScriptkodSorok[i].trim().split(' ')[0]==="while("){
+      console.log(javaScriptkodSorok[i].trim().split(' '));
       whileCiklus="";
       do{
-        console.log(javaScriptkodSorok[i].trim().split(' '));
+       // 
         whileCiklus+=javaScriptkodSorok[i].trim()+" \n";
         i++;
         
@@ -40,6 +40,15 @@ document.getElementById('futtat').addEventListener('click',function(e){
       }
       //console.log(elagazas);
       createIfElse(elagazas);
+    }else if(javaScriptkodSorok[i].trim().split(' ')[0]==="for"){
+      forciklus="";
+      do{ 
+        forciklus+=javaScriptkodSorok[i].trim()+" \n";
+        i++;
+      }while(javaScriptkodSorok[i].trim()!=="}")
+      forciklus+="wait(1000);\n";
+      forciklus+=javaScriptkodSorok[i].trim()+" \n";
+      createForciklus(forciklus);
     }
     
   }
@@ -59,9 +68,42 @@ document.getElementById('ok').addEventListener('click',function(e){
   e.preventDefault();
 });
 
+
+function createForciklus(line){
+  line=line.replaceAll("&lt;","<")
+  line=line.replaceAll("&gt;",">")
+  lines=line.split("\n")
+  bentivaltozok={};
+  for(lin in lines){
+    szavak=lines[lin].split(" ");
+      for(s in szavak){
+          for(q in szavak[s]){
+            for(a in valtozok){
+              if(szavak[s][q]===a){
+                eval("var "+a +"="+valtozok[a]);
+                bentivaltozok[a]=eval(valtozok[a]);
+                break; 
+          }
+        }
+      }
+    }
+  }
+  console.log(line+"   forba");
+  eval(line);
+  for(k in line){
+    for(a in bentivaltozok){
+      if(line[k]===a){
+        bentivaltozok[line[k]]=eval(line[k]);
+        valtozok[a]=bentivaltozok[a];
+        valtozokErtekKiir(valtozok); 
+      }
+    }
+  }    
+}
 function createWhileCiklus(line){
+ 
   belseje="";
-  let bentivaltozok={};
+  bentivaltozok={};
   lines=line.replaceAll(" = ","===")
   lines=lines.replaceAll("&lt;","<")
   lines=lines.replaceAll("&gt;",">")
@@ -131,13 +173,13 @@ function createIfElse(line){
     if(lines[lin].includes("if")|| lines[lin].includes("else")){
       feltetel+=lines[lin]+"\n";
       feltetel+=("wait(3000);\n");
-      feltetel+=`console.log("${lines[lin]}");\n`
+      //feltetel+=`console.log("${lines[lin]}");\n`
     }
     else{feltetel+=lines[lin]+"\n";}
     
   }
   
-  console.log(feltetel)
+  
   eval(feltetel);
   for(k in feltetel){
     for(a in bentivaltozok){
@@ -322,10 +364,17 @@ function forciklusFromInput(text){
   const b=text.split(" ");
   const iterator=b[0];
   let sor=`for (${iterator}${b[1]}`;
+ 
+  if(b[2]<b[3]){
+    sor+=b[2]+`; ${iterator}<`;
+    sor+=`${b[3]}; ${iterator}++){`;
+  }else{
+    sor+=b[2]+`; ${iterator}>`;
+    sor+=`${b[3]}; ${iterator}--){`;
+  }
+ 
   
-  sor+=b[2]+`; ${iterator}<`;
   
-  sor+=`${b[3]}; ${iterator}++){`;
   return sor;
 }
 
