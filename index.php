@@ -14,30 +14,14 @@ $bentVan=$_SESSION['user_name'];
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Szakdoga</title>
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
   
 </head>
 <body>
-  <?php
-   
-    if(empty($bentVan)){
-    print("ures");
-    }
-    else{
-      print("hello ".$asd);
-      print('<form action="" method="POST" class="">'. 
-      '<input type="submit" value="Kilép" name="kilep">'.
-      '</form>');
-    }
-    if(isset($_POST['kilep'])){
-      session_destroy();
-      header("location:index.php");
-    }
   
-?>
 <div class="navbar">
 <div class="logo">
-<h1>PszeudoKód Világa</h1>
+  <h1>PszeudoKód Világa</h1>
 </div>
 <a class="btn">
   <span></span>
@@ -52,11 +36,18 @@ $bentVan=$_SESSION['user_name'];
     '<a href="signup.php">Regisztráció</a>'.
   '</div>');
     }
-    else{
-      print("hello ".$bentVan);
-      print('<form action="" method="POST" class="">'. 
-      '<input type="submit" value="Kilép" name="kilep">'.
-      '</form>');
+    else{?>
+    
+      <div class="dropdown">
+      <button class="dropbtn"><?php print($bentVan); ?></button>
+      <div class="dropdown-content">
+				    <a href="profil.php">Profil</a>
+				    <a href="#">Kódjaim</a>
+				    <a href="phpcodes/logout.php">Kilépés</a>
+				  </div>
+        </div>
+        
+        <?php
     }
     if(isset($_POST['kilep'])){
       session_destroy();

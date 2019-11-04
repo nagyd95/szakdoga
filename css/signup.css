@@ -63,3 +63,29 @@ body,html{
 .btn2{
   background: #333;
 }
+.b1{
+  display: block;
+  width: 260px;
+  padding:10px 0;
+  text-decoration: none;
+  color:white;
+  text-align: center;
+  margin:auto;
+  transition: 0.4s all;
+}
+a:hover{
+  background: #00000040;
+
+}
+.b2{
+  position: absolute;
+  bottom:80px;
+  left:50%;
+  transform: translateX(-50%);
+  width: 260px;
+  padding:10px 0;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.4s all;
+  color:white;
+}
