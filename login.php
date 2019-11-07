@@ -31,7 +31,7 @@ $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 	}
 	else
 	{
-		$sql="select user_name,password FROM user;";
+		$sql="select ID,user_name,password FROM user;";
 		$result=mysqli_query($adatbazis,$sql);
 		if(mysqli_num_rows($result)>0)		{
 			while(($row=mysqli_fetch_assoc($result)))
@@ -39,7 +39,7 @@ $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 						if($nev==$row['user_name'] && $jelszo_md5==$row['password'])
 						{
               $_SESSION['user_name']=$nev;
-              print($_SESSION['user_name']);
+              $_SESSION['id']=$row['ID'];
 							header("location:index.php");
 
 						}

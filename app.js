@@ -56,7 +56,8 @@ document.getElementById('futtat').addEventListener('click',function(e){
 });
 
 document.getElementById('ok').addEventListener('click',function(e){
-
+  document.getElementById('futtat').disabled = false;
+  document.getElementById("ment").style.display="block";
   document.getElementById("eredmeny").innerHTML='';
   document.getElementById("valtozokBe").innerHTML='';
   var rows = document.querySelector('textarea').value.split("\n").length;

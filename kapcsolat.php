@@ -14,8 +14,8 @@ $user_id=$_SESSION['id'];
   <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <title>Szakdoga</title>
-  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <title>Kapcsolat</title>
+  <link rel="stylesheet" type="text/css" href="css/kapcsolat.css">
   
 </head>
 <body>
@@ -101,40 +101,71 @@ if(empty($bentVan)){
 </div>
 
 <form method="POST" action="" >
-			<div class="foGombok">
-				
-				<input type="submit" name="fooldal" value="Főoldal">
-				
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				
-				<input type="submit" name="toplista" value="Toplista">
-				
-				
-				<input type="submit" name="kereses" value="Keresés">		
-
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
-				
-			</div>
+	<div class="foGombok">
+		<input type="submit" name="fooldal" value="Főoldal">	
+		<input type="submit" name="atalakitas" value="Kód Átalakítás" >	
+		<input type="submit" name="toplista" value="Toplista">
+		<input type="submit" name="kereses" value="Keresés">		
+		<input type="submit" name="kapcsolat" value="Kapcsolat">	
+	</div>
 </form>
-<div class="szoveg">
-<p>Ide majd valami fasza szöveg jön</p>
+<hr >
 
+
+<div class="kapcsolat">
+  <p>Írja le véleményét!</p>
+  <form method="POST" action="">	
+    <div id="kapcsos">
+      <table border="1px" align="center">
+        <tr><td>
+          Tárgy:
+        </td><td colspan="2" align="center">
+          <input type="text" name="targy" >
+        </td></tr>
+        <tr><td>Üzenet:</td><td>
+          <textarea rows="8" cols="50" name="leiras"></textarea>
+        </td></tr>
+            <tr><td colspan="2">
+            <input type="submit" name="kapcs" value="Küldés"></td></tr>
+        </table>
+      </div>
+  </form>
 </div>
-  <!-- <div class="jumbotron text-center">
-      <h1>PszeudoKód világa</h1>
-      <p>Resize this responsive page to see the effect!</p> 
-  </div> -->
-  
-    <script src="app.js"></script>
-    <script type="text/javascript">
 
+<?php
+if(isset($_POST['kapcs'])){
+  $targy=$_POST['targy'];
+  $uzenet=$_POST['leiras'];
+  $dt = new DateTime();
+  $dt=$dt->format('Y-m-d');
+  
+  if(!empty($targy) && !empty($uzenet)){
+    $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga'); 
+    if ($adatbazis->connect_error) {
+      die("Connection failed: " . $adatbazis->connect_error);
+    }
+    if(empty($bentVan)){
+    $sql="INSERT INTO `szakdoga`.`uzenetek` (`id`, `uzenet`, `targy`, `user_name`,`date`) 
+        VALUES (NULL, '$uzenet', '$targy', 'vendeg','$dt');";
+
+    }
+    else{
+      $sql="INSERT INTO `uzenetek` (`id`, `uzenet`, `targy`, `user_name`, `date`)
+        VALUES (NULL, '$uzenet', '$targy', '$bentVan','$dt');";
+    
+    }
+    $result=mysqli_query($adatbazis,$sql);
+  }
+}
+  
+
+?>
+<script src="app.js"></script>
+<script type="text/javascript">
 $(".btn").on("click",function(){
   $('.menu').toggleClass("show");
 });
-
-
 </script>
   
-    
 </body>
 </html>
