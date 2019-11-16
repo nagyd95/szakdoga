@@ -51,7 +51,7 @@ if(empty($bentVan)){
       <button class="dropbtn"><?php print($bentVan); ?></button>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
-				    <a href="#">Kódjaim</a>
+            <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
 				  </div>
         </div>

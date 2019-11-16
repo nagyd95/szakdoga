@@ -14,7 +14,17 @@ font-family: "Montserrat";
   background: #f1f1f1f1;
   width: 100%;
 }
-
+.szoveg{
+  width: 60%;
+  margin-top:40px;
+  margin-left:20%;
+  margin-right: 20%;
+  padding:7px;
+  background-color: #f1f1f1f1;
+}
+hr{
+  width: 75%;
+}
 .logo{
   width: 400px;
   height: 40px;

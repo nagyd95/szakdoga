@@ -3,6 +3,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 $bentVan=$_SESSION['user_name'];
 $user_id=$_SESSION['id'];
+if(empty($bentVan)){
+  header("location:index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +19,7 @@ $user_id=$_SESSION['id'];
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Szakdoga</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="css/kodjaim.css">
   
 </head>
 <body>
@@ -51,15 +55,13 @@ if(empty($bentVan)){
       <button class="dropbtn"><?php print($bentVan); ?></button>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
-				    <a href="kodjaim.php">Kódjaim</a>
+            <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
 				  </div>
         </div>
         
         <?php
     }
-    
-    
     
     if(isset($_POST['fooldal'])){
       header("location:index.php");
@@ -102,23 +104,48 @@ if(empty($bentVan)){
 			</div>
 </form>
 <hr >
+<div class="kodjaim">
+<?php
+$adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
+$adatbazis->query("SET NAMES 'utf8'");
+$adatbazis->query("SET CHARACTER SET UTF8");
+if ($adatbazis->connect_error) {
+  die("Connection failed: " . $adatbazis->connect_error);
+}else{
+  $sql="select name,kod FROM code where user_id='$user_id';";
+  $result=mysqli_query($adatbazis,$sql);
+  $i=1;
+  
+  if(mysqli_num_rows($result)>0)		{
+    while ($row = $result->fetch_assoc()) {
+      $hossz=strlen($row["kod"]);
+      
+      print('<div class="felsorol">');
+      $name=$row['name'];
+      $kod=$row['kod'];
+      $leiras = substr($kod, 0,100) . '...';
+      
+      print($i.',&#8195');
+      $i+=1;
+      print('<b>'.$name.'</b></br>');
+      print('<b>'.$leiras.'</b></br>');
+      print('</div>');
+      print('<div class="likeolos">');
+      print('like:   ,dislike:  ');
+      print('</div>');
+      print('<br>');
+    }		
+  }else{
+    echo'Még nincs saját kódja elmentve.';
+  }
+}
 
-<div class="szoveg">
-<p >A pszeudokód az algoritmusok és általában az eljárások leírására használt olyan mesterséges formális nyelv, mely változókból és néhány állandó jelentésű szóból („foglalt” konstansok) áll, és (szándékosan) hasonlít a számítógépes programozási nyelvekre.<br><br>
-
-Az algoritmusok egy-egy elmélet, ismeretterület egy-egy problémakörének kezelésére, megoldására használt olyan utasítássorozatok, melyekben véges sokféle (általában előre megadott, vagy az elmélet által implicite meghatározott) elemi lépés fordulhat csak elő. A pszeudokódok minden elemi lépésnek egy-egy szót, jelet, elnevezést feleltetnek meg, ezáltal alkalmasak az elemi lépések és így az egész algoritmus leírására.<br><br>
-
-A pszeudokódokat alkalmazzák például a számításelméletben vagy a matematika egyéb ágában, a mesterséges intelligencia kutatásában, és általában mindenhol, ahol bizonyos értelemben „programozni” kell, de az algoritmus megadására nem egy konkrét programozási nyelven van szükség.<br><br>
-
-Pszeudokód = „álkód”, mivel ez a leírási mód nagyon közel van a magas szintű programozási nyelvek által használt kódhoz, de egyetlen programozási nyelvvel sem azonos a formája. Mondhatjuk, hogy átmenetet képez a mondatszerű leírás és a kód (=programszöveg, forrásprogram) között. Tehát ez az emberi nyelvhez közel álló, szabályokkal kötött mondatszerű leírást jelent.</p>
+?>
 
 </div>
-  <!-- <div class="jumbotron text-center">
-      <h1>PszeudoKód világa</h1>
-      <p>Resize this responsive page to see the effect!</p> 
-  </div> -->
+
   
-    <script src="app.js"></script>
+<script src="app.js"></script>
     <script type="text/javascript">
 
 $(".btn").on("click",function(){

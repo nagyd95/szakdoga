@@ -2,6 +2,7 @@
 error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 $bentVan=$_SESSION['user_name'];
+$user_id=$_SESSION['id'];
 if(empty($bentVan)){
   header("location:index.php");
 }
@@ -37,7 +38,7 @@ if(empty($bentVan)){
       <button class="dropbtn"><?php print($bentVan); ?></button>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
-				    <a href="#">Kódjaim</a>
+            <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
 				  </div>
         </div>

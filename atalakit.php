@@ -49,31 +49,16 @@ if(empty($bentVan)){
       <button class="dropbtn"><?php print($bentVan); ?></button>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
-				    <a href="#">Kódjaim</a>
+            <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
 				  </div>
         </div>
         
         <?php
     }
-    if(isset($_POST['kilep'])){
-      session_destroy();
-      header("location:index.php");
-    }
     
-    if(isset($_POST['ment'])){
-      $code=($_POST['text']);
-      $nev="ez lesz a neved most";
-      $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
-      if ($adatbazis->connect_error) {
-        die("Connection failed: " . $adatbazis->connect_error);
-      }
-      else{
-        $sql="INSERT INTO `szakdoga`.`code` (`id`, `name`, `kod`, `user_id`) VALUES (NULL, '$nev', '$code', '$user_id');";
-        $result=mysqli_query($adatbazis,$sql);
-      }
-
-    }
+    
+   
     if(isset($_POST['fooldal'])){
       header("location:index.php");
     }
@@ -95,7 +80,7 @@ if(empty($bentVan)){
 </div>
 <div class="header">
     
-<p>Resize this responsive page to see the effect!</p>
+
 </div>
 
 <form method="POST" action="" >
