@@ -6,6 +6,7 @@ $user_id=$_SESSION['id'];
 if(empty($bentVan)){
   header("location:index.php");
 }
+include('phpcodes/rating.php');
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +18,7 @@ if(empty($bentVan)){
   <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <title>Szakdoga</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <link rel="stylesheet" type="text/css" href="css/kodjaim.css">
@@ -112,9 +114,17 @@ $adatbazis->query("SET CHARACTER SET UTF8");
 if ($adatbazis->connect_error) {
   die("Connection failed: " . $adatbazis->connect_error);
 }else{
-  $sql="select name,kod FROM code where user_id='$user_id';";
+  $limit=6;
+  $sql="select count(name) FROM code where user_id='$user_id';";
+  $c = (mysqli_fetch_row(mysqli_query($adatbazis,$sql)));
+  $c=$c[0];
+  $maxpage = ceil($c / $limit);
+  $page = isset($_GET['page']) ? abs((int)$_GET['page']) : 1;
+  $offset = ($page-1) * $limit;
+
+  $sql="select id,name,kod,user_id FROM code where user_id='$user_id' order by id limit $offset, $limit;";
   $result=mysqli_query($adatbazis,$sql);
-  $i=1;
+  
   
   if(mysqli_num_rows($result)>0)		{
     while ($row = $result->fetch_assoc()) {
@@ -125,19 +135,53 @@ if ($adatbazis->connect_error) {
       $kod=$row['kod'];
       $leiras = substr($kod, 0,100) . '...';
       
-      print($i.',&#8195');
-      $i+=1;
+      
       print('<b>'.$name.'</b></br>');
       print('<b>'.$leiras.'</b></br>');
       print('</div>');
       print('<div class="likeolos">');
-      print('like:   ,dislike:  ');
-      print('</div>');
-      print('<br>');
+      ?>
+        <i <?php if (userLiked($row['id'],$row['user_id'])): ?>
+              class="fa fa-thumbs-up like-btn"
+            <?php else: ?>
+              class="fa fa-thumbs-o-up like-btn"
+            <?php endif ?>
+              data-id="<?php echo $row['id']; ?>"></i>
+            <span class="likes"><?php echo getLikes($row['id']); ?></span>
+  
+        <i <?php if (userDisLiked($row['id'],$row['user_id'])): ?>
+              class="fa fa-thumbs-down dislike-btn"
+            <?php else: ?>
+              class="fa fa-thumbs-o-down dislike-btn"
+            <?php endif ?>
+              data-id="<?php echo $row['id']; ?>"></i>
+              <span class="dislikes"><?php echo getDislikes($row['id']); ?></span>
+        <?php
+        print('</div>');
+        print('<br>');
     }		
   }else{
     echo'Még nincs saját kódja elmentve.';
   }
+  print("<div class=\"lapozas\">");
+      if ($maxpage - $linklimit2 < $page)
+      {
+        $linkoffset = $maxpage - $linklimit;
+        if ($linkoffset < 0)
+        {
+          $linkoffset = 0;
+        }
+        $linkend = $maxpage;
+      }				 
+      if ($page > 1)
+      {
+        print "<a href='?page=".($page-1)."'>Előző</a>   ";
+      }
+      if ($page < $maxpage)
+      {
+        print "<a href='?page=".($page+1)."'>Következő</a>";
+      }
+      print("</div>");
 }
 
 ?>
@@ -154,7 +198,8 @@ $(".btn").on("click",function(){
 
 
 </script>
-  
+<script src="js/rating.js"></script>  
+
     
 </body>
 </html>
