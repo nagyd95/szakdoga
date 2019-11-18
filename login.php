@@ -63,7 +63,7 @@ $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
         <input type="text" name="username" id="" placeholder="Felhasználónév">
       </div>
       <div class="tbox">
-        <input type="text" name="password" id="" placeholder="Jelszó">
+        <input type="password" name="password" id="" placeholder="Jelszó">
       </div>
 
       <input class="btn" type="submit" value="Bejelentkezés" name="login">

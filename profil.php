@@ -18,6 +18,7 @@ if(empty($bentVan)){
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Szakdoga</title>
   <link rel="stylesheet" type="text/css" href="css/profil.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 <div class="navbar">
@@ -91,16 +92,47 @@ if(empty($bentVan)){
     }
   }
   
+  if(isset($_POST['fooldal'])){
+    header("location:index.php");
+  }
+  if(isset($_POST['atalakitas'])){
+    header("location:atalakit.php");
+  }
+  if(isset($_POST['toplista'])){
+    header("location:toplista.php");
+  }
+  if(isset($_POST['kereses'])){
+    header("location:kereses.php");
+  }
+  if(isset($_POST['kapcsolat'])){
+    header("location:kapcsolat.php");
+  }
 ?>
 
 </div>
 <div class="header">
-    
-<p>Resize this responsive page to see the effect!</p>
+
 </div>
-<form method="POST" action="">
-<input type="submit" value="Föoldal" name="fooldal">
+<form method="POST" action="" >
+			<div class="foGombok">
+				
+				<input type="submit" name="fooldal" value="Főoldal">
+				
+				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
+				
+				<input type="submit" name="toplista" value="Toplista">
+				
+				
+				<input type="submit" name="kereses" value="Keresés">		
+
+				<input type="submit" name="kapcsolat" value="Kapcsolat">
+				
+			</div>
 </form>
+<hr >
+
+
+
 <?php
 $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 if ($adatbazis->connect_error) {

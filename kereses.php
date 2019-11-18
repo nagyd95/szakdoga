@@ -122,7 +122,7 @@ if (isset($_POST["keres"]) ){
   echo'<input type="text" name="ker" id="ker" ><br>';
 }
 ?>
-<input type="radio" name="keresRadio" value="cim">Cimben
+<input type="radio" name="keresRadio" value="cim" checked>Cimben
 <input type="radio" name="keresRadio" value="leirasban">Cimben és leirásban<br>
 <input type="submit" name="keres" value="Keres"> 
 </form>

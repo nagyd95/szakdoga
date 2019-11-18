@@ -1,0 +1,34 @@
+
+.modal p {
+  font-size: 14px;
+  text-align: right;
+  margin: 10px 0 0;
+}
+.modal p:hover {
+  cursor: pointer;
+}
+
+
+.overlay {
+  width: 100%;
+  height: 75%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  background-color: lightgray;
+  
+}
+.modal {
+  
+  display: none;
+  background: white;
+  padding: 0 20px 20px;
+  overflow: auto;
+  z-index: 1001;
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  
+}
