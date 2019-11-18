@@ -22,7 +22,10 @@ include('phpcodes/rating.php');
   <title>Szakdoga</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <link rel="stylesheet" type="text/css" href="css/kereses.css">
-  
+  <script type="text/javascript">
+
+
+</script>
 </head>
 <body>
   
@@ -31,6 +34,8 @@ include('phpcodes/rating.php');
   <h1>PszeudoKód Világa </h1>
 </div>
 <?php
+
+
 if(empty($bentVan)){
   
 ?>
@@ -58,7 +63,7 @@ if(empty($bentVan)){
       <button class="dropbtn"><?php print($bentVan); ?></button>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
-				    <a href="kodjaim.php">Kódjaim</a>
+				    <a href="kodjaim.php"> Kódjaim </a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
 				  </div>
         </div>
@@ -107,31 +112,83 @@ if(empty($bentVan)){
 			</div>
 </form>
 <hr >
+<form method="POST" action="">
+<?php
+if (isset($_POST["keres"]) ){
+  echo'<input type="text" name="ker" id="ker" value='. $_POST["ker"].' ><br>';
+}elseif(isset($_GET["k"])){
+  echo'<input type="text" name="ker" id="ker" value='. $_GET["k"].' ><br>';
+}else{
+  echo'<input type="text" name="ker" id="ker" ><br>';
+}
+?>
+<input type="radio" name="keresRadio" value="cim">Cimben
+<input type="radio" name="keresRadio" value="leirasban">Cimben és leirásban<br>
+<input type="submit" name="keres" value="Keres"> 
+</form>
+
 <div class="kodjaim">
+
+
 <?php
 $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 $adatbazis->query("SET NAMES 'utf8'");
 $adatbazis->query("SET CHARACTER SET UTF8");
+
+if (isset($_POST["keres"])){
+  $limit=6;
+  $hol=$_POST['keresRadio'];
+  if(isset($_GET['k'])){
+    $mit=$_GET['k'];
+  }else{
+   $mit=$_POST['ker'];
+  }
+  if($hol =="cim"){
+    $sql="select count(id) FROM code where name like '%$mit%' order by id DESC ;";
+    $c = (mysqli_fetch_row(mysqli_query($adatbazis,$sql)));
+  }else{
+    $sql="select count(id) FROM code where name like '%$mit%' or leiras like '%$mit%'  order by id DESC ;";
+    $c = (mysqli_fetch_row(mysqli_query($adatbazis,$sql)));
+  }
+  
+  $c=$c[0];
+  $maxpage = ceil($c / $limit); 
+  $page = isset($_GET['page']) ? abs((int)$_GET['page']) : 1;
+  $offset = ($page-1) * $limit;
+  if($hol =="cim"){
+    $sql="select id,name,kod,user_id FROM code where name like '%$mit%' order by id DESC limit $offset, $limit;";
+  }else{
+    $sql="select id,name,kod,user_id FROM code where name like '%$mit%' or leiras like '%$mit%' order by id DESC limit $offset, $limit;";
+  }
+  $result=mysqli_query($adatbazis,$sql);
+  
+}else{
+  $limit=6;
+  $sql="select count(id) FROM code order by id DESC ;";
+  $c = (mysqli_fetch_row(mysqli_query($adatbazis,$sql)));
+  $c=$c[0];
+  $maxpage = ceil($c / $limit); 
+  $page = isset($_GET['page']) ? abs((int)$_GET['page']) : 1;
+  $offset = ($page-1) * $limit;
+
+  $sql="select id,name,kod,user_id FROM code order by id DESC limit $offset, $limit;";
+  
+  $result=mysqli_query($adatbazis,$sql);
+}
 if ($adatbazis->connect_error) {
   die("Connection failed: " . $adatbazis->connect_error);
 }else{
-  $sql="select id,name,kod,user_id FROM code order by id DESC;";
-  
-  $result=mysqli_query($adatbazis,$sql);
-  $i=1;
-  
+
   if(mysqli_num_rows($result)>0)		{
     while ($row = $result->fetch_assoc()) {
       $hossz=strlen($row["kod"]);
       
       print('<div class="felsorol">');
+      $id=$row['id'];
       $name=$row['name'];
       $kod=$row['kod'];
       $leiras = substr($kod, 0,100) . '...';
-      
-      print($i.',&#8195');
-      $i+=1;
-      print('<b>'.$name.'</b></br>');
+      print('<b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
       print('<b>'.$leiras.'</b></br>');
       print('</div>');
       print('<div class="likeolos">');
@@ -154,11 +211,33 @@ if ($adatbazis->connect_error) {
       <?php
       print('</div>');
       print('<br>');
-    }		
+    }
+    print("<div class=\"lapozas\">");
+      if ($maxpage  < $page)
+      {
+        $linkoffset = $maxpage - $linklimit;
+        if ($linkoffset < 0)
+        {
+          $linkoffset = 0;
+        }
+        $linkend = $maxpage;
+      }				 
+      if ($page > 1)
+      {
+        print "<a href='?page=".($page-1)."&k=".$mit."'>Előző</a>   ";
+      }
+      if ($page < $maxpage)
+      {
+        print "<a href='?page=".($page+1)."&k=".$mit."'>Következő</a>";
+      }
+      print("</div>");
+
   }else{
     echo'Még nincs kód elmentve az oldalon.';
   }
+  
 }
+
 
 
 ?>
@@ -170,6 +249,7 @@ $(".btn").on("click",function(){
 });
 </script>
 <script src="js/rating.js"></script>
+
 
     
 </body>

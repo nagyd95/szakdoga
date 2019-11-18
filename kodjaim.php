@@ -131,12 +131,13 @@ if ($adatbazis->connect_error) {
       $hossz=strlen($row["kod"]);
       
       print('<div class="felsorol">');
+      $id=$row['id'];
       $name=$row['name'];
       $kod=$row['kod'];
       $leiras = substr($kod, 0,100) . '...';
       
       
-      print('<b>'.$name.'</b></br>');
+      print('<b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
       print('<b>'.$leiras.'</b></br>');
       print('</div>');
       print('<div class="likeolos">');

@@ -58,7 +58,7 @@ function getDisLikes($id)
 function userLiked($post_id,$id)
 {
   global $adatbazis;
-  echo $user_id;
+
   $sql = "select user_id from rating where user_id='$id' and code_id=$post_id and rating_action='like';";
   $result = mysqli_query($adatbazis, $sql);
   if (mysqli_num_rows($result) > 0) {

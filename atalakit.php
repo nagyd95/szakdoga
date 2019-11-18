@@ -109,7 +109,23 @@ if(empty($bentVan)){
       <div class="col-xs-4" style="margin:inherit">
         <h3>Pszeudokód</h3>
         <form action="" method="POST" >
+        <?php
+        if(isset($_GET['id'])){
+          $i=$_GET['id'];
+          $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
+          $adatbazis->query("SET NAMES 'utf8'");
+          $adatbazis->query("SET CHARACTER SET UTF8");
+          $sql="select kod FROM code where id=$i;";
+          $result=mysqli_query($adatbazis,$sql);
+          $row = $result->fetch_assoc();
+          echo'<textarea rows="10" cols="70" id="textarea" name="text" title="Ide ird" class="textArea">'.$row['kod'].' </textarea><br>';
+        }else{
+
+        ?>
         <textarea rows="10" cols="70" id="textarea" name="text" title="Ide ird" class="textArea">be: A,B,C&#13;ciklus amíg A&lt;B &#13; A++&#13;ciklus vége &#13;ciklus nein = 0..10&#13; B++&#13;ciklus vége&#13;tombicsekelftars:=1,3,4,5,61&#13;ha B=A&#13; A=10&#13;ha különben B=C &#13; A=1&#13;különben&#13;A=0&#13;elágazás vége&#13;szoveg:=Hello World</textarea><br>
+        <?php
+        }
+        ?>
         <input type="submit" value="Átalakit" id='ok'>
         <input type="submit" value="Futtat" id='futtat' disabled>
         <input type="submit" value="Ment" id='ment' name="ment" style="display: none;">

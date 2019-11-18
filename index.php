@@ -118,7 +118,7 @@ Pszeudokód = „álkód”, mivel ez a leírási mód nagyon közel van a magas
       <p>Resize this responsive page to see the effect!</p> 
   </div> -->
   
-    <script src="app.js"></script>
+   
     <script type="text/javascript">
 
 $(".btn").on("click",function(){
