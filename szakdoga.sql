@@ -10,5 +10,3 @@ CREATE TABLE `szakdoga`.`uzenetek` ( `id` INT NOT NULL AUTO_INCREMENT , `uzenet`
 
 CREATE TABLE `szakdoga`.`rating` ( `id` INT NOT NULL AUTO_INCREMENT , `user_id` INT NOT NULL , `code_id` INT NOT NULL , `rating_action` VARCHAR(20) NOT NULL , PRIMARY KEY (`id`), UNIQUE (`user_id`, `code_id`)) ENGINE = MyISAM;
 
-
-

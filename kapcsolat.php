@@ -148,7 +148,7 @@ if(isset($_POST['kapcs'])){
   
 
 ?>
-<script src="app.js"></script>
+
 <script type="text/javascript">
 $(".btn").on("click",function(){
   $('.menu').toggleClass("show");

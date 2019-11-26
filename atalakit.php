@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 $bentVan=$_SESSION['user_name'];
 $user_id=$_SESSION['id'];
@@ -171,7 +171,11 @@ if(empty($bentVan)){
     <div class="col-xs-6" style="padding-left: 40px" >
         <h3>JavaScript kód</h3>
         
-        <p id="valtozok"></p>
+        <p id="valtozok"><?php
+        if(isset($_POST['valtozok'])){
+          print('hajaja');
+        }
+        ?></p>
         <p id="valtozokBe"></p>
         <p id="eredmeny"></p>
         
@@ -182,6 +186,7 @@ if(empty($bentVan)){
   </div>
   
     <script src="app.js"></script>
+    <script src="js/futtat.js"></script>
     <script type="text/javascript">
 
 $(".btn").on("click",function(){
