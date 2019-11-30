@@ -3,6 +3,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 $bentVan=$_SESSION['user_name'];
 $user_id=$_SESSION['id'];
+if(empty($bentVan) || $bentVan!="admin"){
+  header("location:index.php");
+}
+$listaz="felhasznalok";
 ?>
 
 <!DOCTYPE html>
@@ -91,49 +95,49 @@ if(empty($bentVan)){
 </div>
 
 <form method="POST" action="" >
-
 			<div class="foGombok">
-        
-      <a href="index.php">Főoldal</a>
-        <a href="atalakit.php">Kód Átalakítás</a>
-        <a href="toplista.php">Toplista</a>
-        <a href="kereses.php">Keresés</a>
-        <a href="kapcsolat.php">Kapcsolat</a>
-        <!-- <input type="submit" name="fooldal" value="Főoldal"> 
+				
+        <input type="submit" name="fooldal" value="Főoldal"> 
 				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
 				<input type="submit" name="toplista" value="Toplista">
 				<input type="submit" name="kereses" value="Keresés">		
-				<input type="submit" name="kapcsolat" value="Kapcsolat"> -->
+				<input type="submit" name="kapcsolat" value="Kapcsolat">
 				
 			</div>
 </form>
 <hr >
 
-<div class="szoveg">
-<p >A pszeudokód az algoritmusok és általában az eljárások leírására használt olyan mesterséges formális nyelv, mely változókból és néhány állandó jelentésű szóból („foglalt” konstansok) áll, és (szándékosan) hasonlít a számítógépes programozási nyelvekre.<br><br>
+<a href="kezel.php?mit=felhasznalok">Felhasználok</a>
+<a href="kezel.php?mit=kodok">Kódok</a>
+<a href="kezel.php?mit=uzenetek">Üzenetek</a> 
+<?php
 
-Az algoritmusok egy-egy elmélet, ismeretterület egy-egy problémakörének kezelésére, megoldására használt olyan utasítássorozatok, melyekben véges sokféle (általában előre megadott, vagy az elmélet által implicite meghatározott) elemi lépés fordulhat csak elő. A pszeudokódok minden elemi lépésnek egy-egy szót, jelet, elnevezést feleltetnek meg, ezáltal alkalmasak az elemi lépések és így az egész algoritmus leírására.<br><br>
-
-A pszeudokódokat alkalmazzák például a számításelméletben vagy a matematika egyéb ágában, a mesterséges intelligencia kutatásában, és általában mindenhol, ahol bizonyos értelemben „programozni” kell, de az algoritmus megadására nem egy konkrét programozási nyelven van szükség.<br><br>
-
-Pszeudokód = „álkód”, mivel ez a leírási mód nagyon közel van a magas szintű programozási nyelvek által használt kódhoz, de egyetlen programozási nyelvvel sem azonos a formája. Mondhatjuk, hogy átmenetet képez a mondatszerű leírás és a kód (=programszöveg, forrásprogram) között. Tehát ez az emberi nyelvhez közel álló, szabályokkal kötött mondatszerű leírást jelent.</p>
-
-</div>
-  <!-- <div class="jumbotron text-center">
-      <h1>PszeudoKód világa</h1>
-      <p>Resize this responsive page to see the effect!</p> 
-  </div> -->
+if(isset($_GET['mit'])){
+  $listaz=$_GET['mit'];
   
-   
-    <script type="text/javascript">
+}
+print($listaz);
 
-$(".btn").on("click",function(){
-  $('.menu').toggleClass("show");
-});
-
-
-</script>
+$adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
+$adatbazis->query("SET NAMES 'utf8'");
+$adatbazis->query("SET CHARACTER SET UTF8");
+if($listaz=="felhasznalok"){
+$sql="select * from user";
+$result=mysqli_query($adatbazis,$sql);
+while ($row = $result->fetch_assoc()) {
+  print($row['ID']);
+  print($row['Email']);
+  print($row['user_name']);
   
-    
+}
+}
+else if($listaz=="kodok"){
+
+}
+else if($listaz=="uzenetek"){
+  
+}
+?>
+
 </body>
 </html>

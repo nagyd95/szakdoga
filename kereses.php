@@ -22,10 +22,7 @@ include('phpcodes/rating.php');
   <title>Szakdoga</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <link rel="stylesheet" type="text/css" href="css/kereses.css">
-  <script type="text/javascript">
-
-
-</script>
+  
 </head>
 <body>
   
@@ -60,8 +57,13 @@ if(empty($bentVan)){
     
 
       <div class="dropdown">
-      <button class="dropbtn"><?php print($bentVan); ?></button>
+      <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
+      <?php
+        if($bentVan=="admin"){
+          echo'<a href="kezel.php">Kezelés</a>';
+        }
+        ?>
 				    <a href="profil.php">Profil</a>
 				    <a href="kodjaim.php"> Kódjaim </a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
@@ -98,38 +100,44 @@ if(empty($bentVan)){
 <form method="POST" action="" >
 			<div class="foGombok">
 				
-				<input type="submit" name="fooldal" value="Főoldal">
-				
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				
-				<input type="submit" name="toplista" value="Toplista">
-				
-				
-				<input type="submit" name="kereses" value="Keresés">		
-
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
+      <a href="index.php">Főoldal</a>
+        <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 				
 			</div>
 </form>
 <hr >
+<div class="keres">
 <form method="POST" action="">
+
 <?php
+
 if (isset($_POST["keres"]) ){
-  echo'<input type="text" name="ker" id="ker" value='. $_POST["ker"].' ><br>';
+  echo'Mit keres: <input type="text" name="ker" id="ker" value='. $_POST["ker"].' ><br>';
 }elseif(isset($_GET["k"])){
-  echo'<input type="text" name="ker" id="ker" value='. $_GET["k"].' ><br>';
+  echo'Mit keres: <input type="text" name="ker" id="ker" value='. $_GET["k"].' ><br>';
 }else{
-  echo'<input type="text" name="ker" id="ker" ><br>';
+  echo'Mit keres: <input type="text" name="ker" id="ker" ><br>';
 }
 ?>
-<input type="radio" name="keresRadio" value="cim" checked>Cimben
-<input type="radio" name="keresRadio" value="leirasban">Cimben és leirásban<br>
-<input type="submit" name="keres" value="Keres"> 
+<label class="container">Cimben
+<input type="radio" name="keresRadio" value="cim" checked>
+  <span class="checkmark"></span>
+</label>
+<label class="container">Cimben és leirásban
+<input type="radio" name="keresRadio" value="leirasban">
+  <span class="checkmark"></span>
+</label>
+<!-- <input type="radio" name="keresRadio" value="cim" checked>Cimben -->
+<!-- <input type="radio" name="keresRadio" value="leirasban"><br> -->
+<a href="" name="keres"  id="kereses"> Keresés</a>
 </form>
-
+</div>
 <div class="kodjaim">
 
-
+<hr >
 <?php
 $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 $adatbazis->query("SET NAMES 'utf8'");
@@ -182,26 +190,31 @@ if ($adatbazis->connect_error) {
   if(mysqli_num_rows($result)>0)		{
     while ($row = $result->fetch_assoc()) {
       $hossz=strlen($row["kod"]);
-      
+      $ids=$row['user_id'];
+        $sql="SELECT user_name from user where ID=$ids";
+        $res=mysqli_query($adatbazis,$sql);
+        $r = $res->fetch_assoc();
       print('<div class="felsorol">');
       $id=$row['id'];
       $name=$row['name'];
       $kod=$row['kod'];
       $leiras = substr($kod, 0,100) . '...';
-      print('<b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
-      print('<b>'.$leiras.'</b></br>');
+      print('Cím: <b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
+        print('Leírás: <b>'.$leiras.'</b></br>');
+        print('Feltöltő: <b>'.$r['user_name'].'</b></br>');
       print('</div>');
       print('<div class="likeolos">');
+      if(!empty($bentVan)){
       ?>
       <i <?php if (userLiked($row['id'],$row['user_id'])): ?>
       		  class="fa fa-thumbs-up like-btn"
       	  <?php else: ?>
       		  class="fa fa-thumbs-o-up like-btn"
-      	  <?php endif ?>
+          <?php endif ?>
             data-id="<?php echo $row['id']; ?>"></i>
           <span class="likes"><?php echo getLikes($row['id']); ?></span>
 
-      <i <?php if (userDisLiked($row['id'],$row['user_id'])): ?>
+      <i <?php if (userDisLiked($id,$row['user_id'])): ?>
       		  class="fa fa-thumbs-down dislike-btn"
       	  <?php else: ?>
       		  class="fa fa-thumbs-o-down dislike-btn"
@@ -209,6 +222,17 @@ if ($adatbazis->connect_error) {
             data-id="<?php echo $row['id']; ?>"></i>
             <span class="dislikes"><?php echo getDislikes($row['id']); ?></span>
       <?php
+      }else{
+        ?>
+        
+        <i class="fa fa-thumbs-o-up" data-id="<?php echo $row['id']; ?>"></i>
+        <span class="likes"><?php echo getLikes($row['id']); ?></span>
+
+        <i class="fa fa-thumbs-o-down "
+        data-id="<?php echo $row['id']; ?>"></i>
+        <span class="dislikes"><?php echo getDislikes($row['id']); ?></span>
+        <?php
+      }
       print('</div>');
       print('<br>');
     }
@@ -224,11 +248,11 @@ if ($adatbazis->connect_error) {
       }				 
       if ($page > 1)
       {
-        print "<a href='?page=".($page-1)."&k=".$mit."'>Előző</a>   ";
+        print "<a href='?page=".($page-1)."'>Előző</a>   ";
       }
       if ($page < $maxpage)
       {
-        print "<a href='?page=".($page+1)."&k=".$mit."'>Következő</a>";
+        print "<a href='?page=".($page+1)."'>Következő</a>";
       }
       print("</div>");
 

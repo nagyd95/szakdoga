@@ -14,8 +14,13 @@ $user_id=$_SESSION['id'];
   <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/autoresize.js"></script>
+    <script type="text/javascript">
+  $('textarea').autoResize();
+  </script>
   <title>Kapcsolat</title>
   <link rel="stylesheet" type="text/css" href="css/kapcsolat.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
   
 </head>
 <body>
@@ -48,7 +53,7 @@ if(empty($bentVan)){
     
 
       <div class="dropdown">
-      <button class="dropbtn"><?php print($bentVan); ?></button>
+      <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
@@ -90,11 +95,11 @@ if(empty($bentVan)){
 
 <form method="POST" action="" >
 	<div class="foGombok">
-		<input type="submit" name="fooldal" value="Főoldal">	
-		<input type="submit" name="atalakitas" value="Kód Átalakítás" >	
-		<input type="submit" name="toplista" value="Toplista">
-		<input type="submit" name="kereses" value="Keresés">		
-		<input type="submit" name="kapcsolat" value="Kapcsolat">	
+  <a href="index.php">Főoldal</a>
+        <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 	</div>
 </form>
 <hr >
@@ -104,17 +109,17 @@ if(empty($bentVan)){
   <p>Írja le véleményét!</p>
   <form method="POST" action="">	
     <div id="kapcsos">
-      <table border="1px" align="center">
+      <table border="0px" align="center">
         <tr><td>
           Tárgy:
         </td><td colspan="2" align="center">
-          <input type="text" name="targy" >
+          <input type="text" name="targy" id="targy" >
         </td></tr>
         <tr><td>Üzenet:</td><td>
           <textarea rows="8" cols="50" name="leiras"></textarea>
         </td></tr>
-            <tr><td colspan="2">
-            <input type="submit" name="kapcs" value="Küldés"></td></tr>
+            <tr><td colspan="2" align="center">
+            <a href="" name="kapcs" >Küldés</a></td></tr>
         </table>
       </div>
   </form>

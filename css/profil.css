@@ -1,25 +1,32 @@
 
   table{
-    
     text-align: center;
     width: 60%;
     margin-left: 23%;
-    height: 100px;
-    padding: 20px;
+    height: 60px;
+    padding: 10px;
+    border:0px;
   }
   #page {
-    font-family: Cursive;
-    background-color: #BDBDBD;
     margin-left: 25%;
     width: 50%;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 40px;
     text-align: left;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    -webkit-box-shadow: 0px 0px 3px 3px rgba(3, 3, 3, 0.8);
-    box-shadow: 0px 0px 3px 3px rgba(3, 3, 3, 0.8);
     min-height: 250px;
+}
+a{
+  color:#e17055;
+  font-size: 20px;
+}
+a:hover{
+  color:#e17055;
+}
+
+input[type=password],input[type=text]{
+  color:black;
+  border:none;
+  background: #bdc3c7;
+  padding-left: 3px;
+  outline: none;
 }

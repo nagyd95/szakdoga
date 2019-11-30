@@ -14,10 +14,15 @@ $user_id=$_SESSION['id'];
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type='text/javascript' src='js/site.js'></script>
+  <script src="js/autoresize.js"></script>
+    <script type="text/javascript">
+  $('textarea').autoResize();
+  </script>
   <title>Átalakit</title>
   <script type='text/javascript' src='js/jquery.modal.js'></script>
   <link rel="stylesheet" type="text/css" href="css/atalakit.css">
   <link rel="stylesheet" type="text/css" href="css/pop.css" />
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
   
 
 </head>
@@ -50,8 +55,13 @@ if(empty($bentVan)){
     
 
       <div class="dropdown">
-      <button class="dropbtn"><?php print($bentVan); ?></button>
+      <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
+      <?php
+        if($bentVan=="admin"){
+          echo'<a href="kezel.php">Kezelés</a>';
+        }
+        ?>
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
@@ -90,28 +100,25 @@ if(empty($bentVan)){
 <form method="POST" action="" >
 			<div class="foGombok">
 				
-				<input type="submit" name="fooldal" value="Főoldal">
-				
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				
-				<input type="submit" name="toplista" value="Toplista">
-				
-				
-				<input type="submit" name="kereses" value="Keresés">		
-
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
+			<a href="index.php">Főoldal</a>
+        <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 				
 			</div>
 			</form>
-			
+			<hr >
   <!-- <div class="jumbotron text-center">
       <h1>PszeudoKód világa</h1>
       <p>Resize this responsive page to see the effect!</p> 
   </div> -->
   <div class="container">
     <div class="row">
-      <div class="col-xs-4" style="margin:inherit">
-        <h3>Pszeudokód</h3>
+      <div class="col-xs-6"  style="margin:inherit">
+        <h2 > Pszeudokód </h2><a href="" id='ok'> Átalakít</a> 
+        <a class=modalLink id="ment" href=#modal style="display: none;" >Mentés</a>
+        
         <form action="" method="POST" >
         <?php
         if(isset($_POST['mentes'])){
@@ -140,7 +147,7 @@ if(empty($bentVan)){
           $sql="select kod FROM code where id=$i;";
           $result=mysqli_query($adatbazis,$sql);
           $row = $result->fetch_assoc();
-          echo'<textarea rows="10" cols="70" id="textarea" name="text" title="Ide ird" class="textArea">'.$row['kod'].' </textarea><br>';
+          echo'<textarea rows="10" cols="50" id="textarea" name="text" title="Ide ird" class="textArea">'.$row['kod'].' </textarea><br>';
         }else{
 
         ?>
@@ -150,9 +157,9 @@ if(empty($bentVan)){
         <?php
         }
         ?>
-        <input type="submit" value="Átalakit" id='ok'>
-        <input type="submit" value="Futtat" id='futtat' disabled>
-        <a class=modalLink id="ment" href=#modal style="display: none;" >Mentés</a>
+        
+        
+        
         <div class="overlay"></div>
         <div id="modal" class="modal"  >
           <label for="cim">Cim</label>
@@ -168,9 +175,9 @@ if(empty($bentVan)){
         
         </form>
     </div>
-    <div class="col-xs-6" style="padding-left: 40px" >
-        <h3>JavaScript kód</h3>
-        
+    <div class="col-xs-6" style="padding-left: 80px" >
+        <h2>JavaScript kód</h2>
+        <a href="" id='futtat' style="display: none;">Futtat</a>
         <p id="valtozok"><?php
         if(isset($_POST['valtozok'])){
           print('hajaja');
@@ -187,12 +194,19 @@ if(empty($bentVan)){
   
     <script src="app.js"></script>
     <script src="js/futtat.js"></script>
+    <script src="js/autoresize.js"></script>
     <script type="text/javascript">
-
-$(".btn").on("click",function(){
-  $('.menu').toggleClass("show");
-});
-
+  $('textarea').autoResize();
+  $(".btn").on("click",function(){
+    $('.menu').toggleClass("show");
+  });
+  a=document.getElementById("textarea").innerHTML;
+  if(a!==""){
+    document.getElementById("textarea").focus();
+    document.createEvent('KeyboardEvent')
+    let keyupEvent = new Event('keyup');
+    document.getElementById("textarea").dispatchEvent(keyupEvent)
+  }
 
 </script>
 </body>

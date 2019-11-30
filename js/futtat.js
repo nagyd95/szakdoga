@@ -7,8 +7,15 @@ function alakit(index){
   beker=beker.replaceAll('<span style="color:green;"> ⮜ </span>'," ")
   beker=beker.split("<br>");
   beker[index]=beker[index]+" <span style='color:green;'> &#x2B9C; </span>";
+  var ind=0;
   for(k in beker){
-    ki+=beker[k]+" <br>";
+    ind++
+    if(ind===beker.length){
+      ki+=beker[k];
+    }else{
+      ki+=beker[k]+" <br>";
+    }
+    
   }
   return ki;
 }

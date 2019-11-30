@@ -54,7 +54,7 @@ if(empty($bentVan)){
     
 
       <div class="dropdown">
-      <button class="dropbtn"><?php print($bentVan); ?></button>
+      <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
@@ -92,16 +92,11 @@ if(empty($bentVan)){
 <form method="POST" action="" >
 			<div class="foGombok">
 				
-				<input type="submit" name="fooldal" value="Főoldal">
-				
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				
-				<input type="submit" name="toplista" value="Toplista">
-				
-				
-				<input type="submit" name="kereses" value="Keresés">		
-
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
+			<a href="index.php">Főoldal</a>
+        <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 				
 			</div>
 </form>
@@ -129,7 +124,6 @@ if ($adatbazis->connect_error) {
   if(mysqli_num_rows($result)>0)		{
     while ($row = $result->fetch_assoc()) {
       $hossz=strlen($row["kod"]);
-      
       print('<div class="felsorol">');
       $id=$row['id'];
       $name=$row['name'];
@@ -137,8 +131,9 @@ if ($adatbazis->connect_error) {
       $leiras = substr($kod, 0,100) . '...';
       
       
-      print('<b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
-      print('<b>'.$leiras.'</b></br>');
+      print('Cím: <b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
+      print('Leírás: <b>'.$leiras.'</b></br>');
+      
       print('</div>');
       print('<div class="likeolos">');
       ?>

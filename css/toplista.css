@@ -6,21 +6,27 @@
 }
 .felsorol{
   align-items:center;
-  margin-top:20px;
-  background-color: white;
+  
+  background-color: #dfe6e9;
   width: 80%;
   margin-left: 10%;
   color:black;
 
 }
 .likeolos{
-  background-color: white;
+  background-color: #dfe6e9;
   width: 80%;
   margin-left: 10%;
   color:black;
 }
 i {
   color: blue;
+}
+a{
+  color:#e17055;
+}
+a:hover{
+  color:#e17055;
 }
 .fa {
   font-size: 1.2em;

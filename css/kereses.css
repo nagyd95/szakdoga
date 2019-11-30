@@ -6,15 +6,13 @@
 }
 .felsorol{
   align-items:center;
-  margin-top:20px;
-  background-color: white;
+  background-color: #dfe6e9;
   width: 80%;
   margin-left: 10%;
   color:black;
-
 }
 .likeolos{
-  background-color: white;
+  background-color: #dfe6e9;
   width: 80%;
   margin-left: 10%;
   color:black;
@@ -27,4 +25,93 @@ i {
 }
 .fa-thumbs-down, .fa-thumbs-o-down {
   transform:rotateY(180deg);
+}
+a{
+  color:#e17055;
+}
+a:hover{
+  color:#e17055;
+}
+.keres{
+  font-size: 20px;
+  width: 25%;
+  margin-left: 37.5%;
+  margin-right: 37.5%;
+  border:none;
+  outline: none;
+}
+ #kereses{
+   font-size: 20px;
+  width: 10%;
+  margin-left: 47,5%;
+  margin-right: 47,5%;
+  padding-left: 50px;
+} 
+#ker{
+  color:black;
+  border:none;
+  background: #bdc3c7;
+  padding-left: 3px;
+  outline: none;
+}
+.lapozas{
+  margin-left: 42%;
+  margin-right: 50%;
+  margin-bottom:15px;
+  
+}
+.container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  background-color:  #dfe6e9;
+  border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+  background-color:  #dfe6e9;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+ 	top: 4.5px;
+	left: 5px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
 }

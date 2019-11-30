@@ -6,7 +6,14 @@ let frontEnden;
 
 document.getElementById('ok').addEventListener('click',function(e){
   document.getElementById('futtat').disabled = false;
-  document.getElementById("ment").style.display="block";
+  // var y=document.createElement("a");
+  // y.setAttribute("href","#modal")
+  // y.setAttribute("class","modalLink");
+  // y.setAttribute("id","ment");
+  // y.innerHTML="Mentés";
+  // document.getElementById("ok").appendChild(y);
+  document.getElementById("ment").style.display="inline";
+  document.getElementById("futtat").style.display="inline";
   document.getElementById("eredmeny").innerHTML='';
   document.getElementById("valtozokBe").innerHTML='';
   var rows = document.querySelector('textarea').value.split("\n").length;
@@ -58,6 +65,7 @@ function search(line){
         valtozokErtekKiir(valtozokBeker);
         valtozokErtekBeker(valtozokBeker);
         document.getElementById('valtozokBeker').addEventListener('click',function(e){
+          document.getElementById('futtat').style.color="green";
         for (let [key, value] of Object.entries(valtozokBeker)) {
           valtozokBeker[key]=document.getElementById(key).value;
         }
@@ -238,7 +246,7 @@ function valtozokErtekBeker(valtozok){
   }
   var x=document.createElement("INPUT");
   x.setAttribute("type","submit");
-  x.setAttribute("value","Megadás");
+  x.setAttribute("value","Változok értékadás");
   x.setAttribute("id","valtozokBeker");
   document.getElementById("valtozokBe").appendChild(x);
 }

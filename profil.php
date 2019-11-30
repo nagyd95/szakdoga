@@ -17,8 +17,9 @@ if(empty($bentVan)){
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Szakdoga</title>
-  <link rel="stylesheet" type="text/css" href="css/profil.css">
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="css/profil.css">
+  
 </head>
 <body>
 <div class="navbar">
@@ -36,8 +37,13 @@ if(empty($bentVan)){
     }
     else{?>
      <div class="dropdown">
-      <button class="dropbtn"><?php print($bentVan); ?></button>
+     <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
+      <?php
+        if($bentVan=="admin"){
+          echo'<a href="kezel.php">Kezelés</a>';
+        }
+        ?>
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
@@ -116,16 +122,11 @@ if(empty($bentVan)){
 <form method="POST" action="" >
 			<div class="foGombok">
 				
-				<input type="submit" name="fooldal" value="Főoldal">
-				
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				
-				<input type="submit" name="toplista" value="Toplista">
-				
-				
-				<input type="submit" name="kereses" value="Keresés">		
-
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
+      <a href="index.php">Főoldal</a>
+        <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 				
 			</div>
 </form>
@@ -200,7 +201,7 @@ else
   </tr>
   <tr>
     <td colspan="2">
-  <input type="submit" name="jelszoValt" value="Jelszó mentése">
+  <a href="" name="jelszoValt">Jelszó mentése</a>
   </td>
   </tr>
     <?php
@@ -229,7 +230,7 @@ else
 </tr>
 <tr>
   <td colspan="2">
-  <input type="submit" name="emailValt" value="Email mentése">
+  <a href="" name="emailValt" >Email mentése</a>
 </td>
 </tr>
 </form>

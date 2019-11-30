@@ -1,3 +1,4 @@
+
 .kodjaim{
   background-color:#f1f1f1f1; 
   width: 80%;
@@ -6,15 +7,15 @@
 }
 .felsorol{
   align-items:center;
-  margin-top:20px;
-  background-color: white;
+  
+  background-color: #dfe6e9;
   width: 80%;
   margin-left: 10%;
   color:black;
 
 }
 .likeolos{
-  background-color: white;
+  background-color: #dfe6e9;
   width: 80%;
   margin-left: 10%;
   color:black;
@@ -28,7 +29,15 @@ i {
 .fa-thumbs-down, .fa-thumbs-o-down {
   transform:rotateY(180deg);
 }
+a{
+  color:#e17055;
+}
+a:hover{
+  color:#e17055;
+}
 .lapozas{
-  margin-left: 50%;
+  margin-left: 42%;
   margin-right: 50%;
+  margin-bottom:15px;
+  
 }

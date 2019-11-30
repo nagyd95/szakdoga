@@ -51,7 +51,7 @@ if(empty($bentVan)){
     
 
       <div class="dropdown">
-      <button class="dropbtn"><?php print($bentVan); ?></button>
+      <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
 				    <a href="kodjaim.php">Kódjaim</a>
@@ -91,16 +91,11 @@ if(empty($bentVan)){
 <form method="POST" action="" >
 			<div class="foGombok">
 				
-				<input type="submit" name="fooldal" value="Főoldal">
-				
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				
-				<input type="submit" name="toplista" value="Toplista">
-				
-				
-				<input type="submit" name="kereses" value="Keresés">		
-
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
+      <a href="index.php">Főoldal</a>
+        <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 				
 			</div>
 </form>
@@ -133,26 +128,30 @@ $hol = $_GET['hol'];
     
     //$i = isset($_GET['i']) ? abs((int)$_GET['i']) : 1;
     
-    $sql="SELECT c.id,c.name,c.kod,c.user_id,count(c.id) as db FROM code c inner join rating r on (c.id=r.code_id) where r.rating_action='like' GROUP by c.id order by db DESC limit $offset, $limit ;";
+    $sql="SELECT c.id,c.name,c.kod,c.user_id,c.leiras,count(c.id) as db FROM code c inner join rating r on (c.id=r.code_id) where r.rating_action='like' GROUP by c.id order by db DESC limit $offset, $limit ;";
     $result=mysqli_query($adatbazis,$sql);
     if(mysqli_num_rows($result)>0)		{
       while ($row = $result->fetch_assoc()) {
-        $hossz=strlen($row["kod"]);
-        
+        $hossz=strlen($row["leiras"]);
+        $ids=$row['user_id'];
+        $sql="SELECT user_name from user where ID=$ids";
+        $res=mysqli_query($adatbazis,$sql);
+        $r = $res->fetch_assoc();
         print('<div class="felsorol">');
         $id=$row['id'];
         $name=$row['name'];
-        $kod=$row['kod'];
+        $kod=$row['leiras'];
         $leiras = substr($kod, 0,100) . '...';
         
-        // print($i.',&#8195');
-        // $i+=1;
-        print('<b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
-        print('<b>'.$leiras.'</b></br>');
+       
+        print('Cím: <b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
+        print('Leírás: <b>'.$leiras.'</b></br>');
+        print('Feltöltő: <b>'.$r['user_name'].'</b></br>');
         print('</div>');
         print('<div class="likeolos">');
+        if(!empty($bentVan)){
         ?>
-        <i <?php if (userLiked($row['id'],$row['user_id'])): ?>
+        <i <?php  if(userLiked($row['id'],$row['user_id'])): ?>
               class="fa fa-thumbs-up like-btn"
             <?php else: ?>
               class="fa fa-thumbs-o-up like-btn"
@@ -168,6 +167,17 @@ $hol = $_GET['hol'];
               data-id="<?php echo $row['id']; ?>"></i>
               <span class="dislikes"><?php echo getDislikes($row['id']); ?></span>
         <?php
+        }else{
+          ?>
+          
+          <i class="fa fa-thumbs-o-up" data-id="<?php echo $row['id']; ?>"></i>
+          <span class="likes"><?php echo getLikes($row['id']); ?></span>
+
+          <i class="fa fa-thumbs-o-down "
+          data-id="<?php echo $row['id']; ?>"></i>
+          <span class="dislikes"><?php echo getDislikes($row['id']); ?></span>
+          <?php
+        }
         print('</div>');
         print('<br>');
           
@@ -201,6 +211,7 @@ $hol = $_GET['hol'];
 
 
 ?>
+
 </div>
 
 

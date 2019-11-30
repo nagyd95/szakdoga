@@ -57,13 +57,15 @@ function getDisLikes($id)
 
 function userLiked($post_id,$id)
 {
-  global $adatbazis;
+  $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 
-  $sql = "select user_id from rating where user_id='$id' and code_id=$post_id and rating_action='like';";
+  $sql = "select * from rating where user_id='$id' and code_id='$post_id' and rating_action='like';";
   $result = mysqli_query($adatbazis, $sql);
   if (mysqli_num_rows($result) > 0) {
+   
   	return true;
   }else{
+    
   	return false;
   }
 }
@@ -72,11 +74,12 @@ function userDisLiked($post_id,$id)
   global $adatbazis;
 
   $sql = "SELECT * FROM rating WHERE user_id='$id' 
-  		  AND code_id='$post_id' AND rating_action='dislike'";
+  		  AND code_id='$post_id' AND rating_action='dislike';";
   $result = mysqli_query($adatbazis, $sql);
   if (mysqli_num_rows($result) > 0) {
   	return true;
   }else{
+   
   	return false;
   }
 }
