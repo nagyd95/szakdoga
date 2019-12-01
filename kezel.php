@@ -18,8 +18,10 @@ $listaz="felhasznalok";
   <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <title>Szakdoga</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="css/kezel.css">
   
 </head>
 <body>
@@ -96,46 +98,88 @@ if(empty($bentVan)){
 
 <form method="POST" action="" >
 			<div class="foGombok">
-				
-        <input type="submit" name="fooldal" value="Főoldal"> 
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				<input type="submit" name="toplista" value="Toplista">
-				<input type="submit" name="kereses" value="Keresés">		
-				<input type="submit" name="kapcsolat" value="Kapcsolat">
+      <a href="index.php">Főoldal</a>
+      <a href="atalakit.php">Kód Átalakítás</a>
+        <a href="toplista.php">Toplista</a>
+        <a href="kereses.php">Keresés</a>
+        <a href="kapcsolat.php">Kapcsolat</a>
 				
 			</div>
 </form>
 <hr >
-
+<div class="mitKezel">
 <a href="kezel.php?mit=felhasznalok">Felhasználok</a>
 <a href="kezel.php?mit=kodok">Kódok</a>
 <a href="kezel.php?mit=uzenetek">Üzenetek</a> 
+  </div>
 <?php
 
 if(isset($_GET['mit'])){
   $listaz=$_GET['mit'];
   
 }
-print($listaz);
+
 
 $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 $adatbazis->query("SET NAMES 'utf8'");
 $adatbazis->query("SET CHARACTER SET UTF8");
 if($listaz=="felhasznalok"){
+ echo' <table border="0px" align="center"> <tr align="center"><td><b>ID<b> </td><td><b>Felhasználó név<b></td><td><b>E-mail<b></td><td><b>Törlés<b></td>';
+        
+        
 $sql="select * from user";
 $result=mysqli_query($adatbazis,$sql);
 while ($row = $result->fetch_assoc()) {
-  print($row['ID']);
-  print($row['Email']);
-  print($row['user_name']);
+  echo'<tr align="center">';
+  echo'<td>'.$row["ID"].'</td>';
+  echo'<td>'.$row["user_name"].'</td>';
+  echo'<td>'.$row["Email"].'</td>';
+  echo'<td><i class="fa fa-close"></i></td>';
+  echo'</tr>';
   
 }
+echo '</table>';
 }
 else if($listaz=="kodok"){
-
+  echo' <table border="0px" align="center"> <tr align="center"><td><b>ID<b> </td><td><b>Név<b></td><td><b>Leírás<b></td><td><b>Kód<b></td><td><b>Feltöltő<b></td><td><b>Törlés<b></td>';
+  $sql="select * from code";
+  $result=mysqli_query($adatbazis,$sql);
+  while ($row = $result->fetch_assoc()) {
+    echo'<tr align="center">';
+    echo'<td>'.$row["id"].'</td>';
+    echo'<td>'.$row["name"].'</td>';
+    echo'<td>'.$row["leiras"].'</td>';
+    $kod=$row['kod'];
+    if(strlen($kod)>100){
+        $kod2 = substr($kod, 0,100) . '...';
+        echo'<td>'.$kod2.'</td>';
+    }else{
+      echo'<td>'.$kod.'</td>';
+    }
+    
+    echo'<td>'.$row["user_id"].'</td>';
+    echo'<td><i class="fa fa-close"></i></td>';
+    echo'</tr>';
+    
+  }
+  echo '</table>';
 }
 else if($listaz=="uzenetek"){
-  
+  echo' <table border="0px" align="center"> <tr align="center"><td><b>ID<b> </td><td><b>Tárgy<b></td><td><b>Üzenet<b></td><td><b>Felhasználó<b></td><td><b>Dátum<b></td><td><b>Törlés<b></td>';
+  $sql="select * from uzenetek";
+  $result=mysqli_query($adatbazis,$sql);
+  while ($row = $result->fetch_assoc()) {
+    echo'<tr align="center">';
+    echo'<td>'.$row["id"].'</td>';
+    echo'<td>'.$row["targy"].'</td>';
+    echo'<td>'.$row["uzenet"].'</td>';
+    echo'<td>'.$row["user_name"].'</td>';
+    echo'<td>'.$row["date"].'</td>';
+    echo'<td><i class="fa fa-close"></i></td>';
+    echo'</tr>';
+    
+  }
+  echo '</table>';
 }
 ?>
 

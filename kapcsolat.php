@@ -55,6 +55,11 @@ if(empty($bentVan)){
       <div class="dropdown">
       <a class="dropbtn"><?php print($bentVan); ?></a>
       <div class="dropdown-content">
+      <?php
+        if($bentVan=="admin"){
+          echo'<a href="kezel.php">Kezelés</a>';
+        }
+        ?>
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
 				    <a href="phpcodes/logout.php">Kilépés</a>
@@ -119,7 +124,7 @@ if(empty($bentVan)){
           <textarea rows="8" cols="50" name="leiras"></textarea>
         </td></tr>
             <tr><td colspan="2" align="center">
-            <a href="" name="kapcs" >Küldés</a></td></tr>
+            <a href="" name="kapcs" id="kapcs" >Küldés</a></td></tr>
         </table>
       </div>
   </form>

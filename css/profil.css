@@ -6,6 +6,7 @@
     height: 60px;
     padding: 10px;
     border:0px;
+    border-color: #dfe6e9;
   }
   #page {
     margin-left: 25%;
@@ -14,6 +15,7 @@
     margin-top: 40px;
     text-align: left;
     min-height: 250px;
+    background-color: #dfe6e9;
 }
 a{
   color:#e17055;
