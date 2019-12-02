@@ -21,8 +21,9 @@ $user_id=$_SESSION['id'];
   <title>Átalakit</title>
   <script type='text/javascript' src='js/jquery.modal.js'></script>
   <link rel="stylesheet" type="text/css" href="css/atalakit.css">
-  <link rel="stylesheet" type="text/css" href="css/pop.css" />
+  
   <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link rel="stylesheet" type="text/css" href="css/pop.css" />
   
 
 </head>
@@ -162,12 +163,18 @@ if(empty($bentVan)){
         
         <div class="overlay"></div>
         <div id="modal" class="modal"  >
-          <label for="cim">Cim</label>
+          <label for="cim">Cim:</label>
           <input type="text" name="cim"><br>
-          <label for="leiras">Leirás</label>
+          <label for="leiras">Leirás:</label>
           <input type="text" name="leiras" class="leiras"><br>
-          <input type="submit" name="mentes" value="Mentés">
-          <input type="button" class="closeBtn" value="Mégse">
+          <input type="submit" name="mentes" value="Mentés" style="
+          margin-top: 25px;
+          color:green;
+          ">
+          <input type="button" class="closeBtn" name="megse" value="Mégse"style="
+          margin-top: 25px;
+          color:red;
+          ">
         </form>
        
 				</div>

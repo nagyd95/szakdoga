@@ -21,7 +21,11 @@
     outline: none;
     margin-bottom: 5px;
   }
-  #kapcs{
+  #kapcsol{
     font-size: 20px;
     color:#e17055;
+    background: none;
+    border:none;
+    border-color:#bdc3c7 ;
+    outline: none;
   }

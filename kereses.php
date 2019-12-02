@@ -132,7 +132,7 @@ if (isset($_POST["keres"]) ){
 </label>
 <!-- <input type="radio" name="keresRadio" value="cim" checked>Cimben -->
 <!-- <input type="radio" name="keresRadio" value="leirasban"><br> -->
-<a href="" name="keres"  id="kereses"> Keresés</a>
+<input type="submit" name="keres" id="kereses" value="Keresés">
 </form>
 </div>
 <div class="kodjaim">
@@ -179,7 +179,7 @@ if (isset($_POST["keres"])){
   $page = isset($_GET['page']) ? abs((int)$_GET['page']) : 1;
   $offset = ($page-1) * $limit;
 
-  $sql="select id,name,kod,user_id FROM code order by id DESC limit $offset, $limit;";
+  $sql="select id,name,kod,user_id,leiras FROM code order by id DESC limit $offset, $limit;";
   
   $result=mysqli_query($adatbazis,$sql);
 }
@@ -189,7 +189,7 @@ if ($adatbazis->connect_error) {
 
   if(mysqli_num_rows($result)>0)		{
     while ($row = $result->fetch_assoc()) {
-      $hossz=strlen($row["kod"]);
+      $hossz=strlen($row["leiras"]);
       $ids=$row['user_id'];
         $sql="SELECT user_name from user where ID=$ids";
         $res=mysqli_query($adatbazis,$sql);
@@ -197,8 +197,8 @@ if ($adatbazis->connect_error) {
       print('<div class="felsorol">');
       $id=$row['id'];
       $name=$row['name'];
-      $kod=$row['kod'];
-      $leiras = substr($kod, 0,100) . '...';
+      $leiras=$row['leiras'];
+      $leiras = substr($leiras, 0,100) . '...';
       print('Cím: <b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
         print('Leírás: <b>'.$leiras.'</b></br>');
         print('Feltöltő: <b>'.$r['user_name'].'</b></br>');

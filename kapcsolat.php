@@ -15,9 +15,7 @@ $user_id=$_SESSION['id'];
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="js/autoresize.js"></script>
-    <script type="text/javascript">
-  $('textarea').autoResize();
-  </script>
+    
   <title>Kapcsolat</title>
   <link rel="stylesheet" type="text/css" href="css/kapcsolat.css">
   <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -90,8 +88,36 @@ if(empty($bentVan)){
       header("location:kapcsolat.php");
     }
   
-?>
 
+if(isset($_POST['kapcs'])){
+  $targy=$_POST['targy'];
+  $uzenet=$_POST['leiras'];
+  $dt = new DateTime();
+  $dt=$dt->format('Y-m-d');
+  
+  if(!empty($targy) && !empty($uzenet)){
+    $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga'); 
+    $adatbazis->query("SET NAMES 'utf8'");
+    $adatbazis->query("SET CHARACTER SET UTF8");
+    if ($adatbazis->connect_error) {
+      die("Connection failed: " . $adatbazis->connect_error);
+    }
+    
+    if(empty($bentVan)){
+    $sql="INSERT INTO `uzenetek` (`id`, `uzenet`, `targy`, `user_name`,`date`) 
+        VALUES (NULL, '$uzenet', '$targy', 'vendeg','$dt');";
+    }
+    else{
+      $sql="INSERT INTO `uzenetek` (`id`, `uzenet`, `targy`, `user_name`, `date`)
+      VALUES (NULL, '$uzenet', '$targy', '$bentVan','$dt');";
+    }
+    $result=mysqli_query($adatbazis,$sql);
+    
+  }
+}
+  
+
+?>
 </div>
 <div class="header">
     
@@ -124,40 +150,15 @@ if(empty($bentVan)){
           <textarea rows="8" cols="50" name="leiras"></textarea>
         </td></tr>
             <tr><td colspan="2" align="center">
-            <a href="" name="kapcs" id="kapcs" >Küldés</a></td></tr>
+            <input type="submit"  name="kapcs" id="kapcsol" value="Küldés" ></td></tr>
         </table>
       </div>
   </form>
 </div>
 
-<?php
-if(isset($_POST['kapcs'])){
-  $targy=$_POST['targy'];
-  $uzenet=$_POST['leiras'];
-  $dt = new DateTime();
-  $dt=$dt->format('Y-m-d');
-  
-  if(!empty($targy) && !empty($uzenet)){
-    $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga'); 
-    if ($adatbazis->connect_error) {
-      die("Connection failed: " . $adatbazis->connect_error);
-    }
-    if(empty($bentVan)){
-    $sql="INSERT INTO `szakdoga`.`uzenetek` (`id`, `uzenet`, `targy`, `user_name`,`date`) 
-        VALUES (NULL, '$uzenet', '$targy', 'vendeg','$dt');";
+ 
 
-    }
-    else{
-      $sql="INSERT INTO `uzenetek` (`id`, `uzenet`, `targy`, `user_name`, `date`)
-        VALUES (NULL, '$uzenet', '$targy', '$bentVan','$dt');";
-    
-    }
-    $result=mysqli_query($adatbazis,$sql);
-  }
-}
-  
 
-?>
 
 <script type="text/javascript">
 $(".btn").on("click",function(){

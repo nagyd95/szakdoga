@@ -118,7 +118,27 @@ if(isset($_GET['mit'])){
   $listaz=$_GET['mit'];
   
 }
-
+$adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
+$adatbazis->query("SET NAMES 'utf8'");
+$adatbazis->query("SET CHARACTER SET UTF8");
+if (($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['_METHOD'] == 'DELETE_USER')) {
+  $id = (int) $_POST['userID'];
+  $sql="DELETE FROM user WHERE ID='$id';";
+  $result = mysqli_query($adatbazis,$sql);
+  
+}
+else if (($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['_METHOD'] == 'DELETE_CODE')) {
+  $id = (int) $_POST['codeID'];
+  $sql="DELETE FROM code WHERE id='$id';";
+  $result = mysqli_query($adatbazis,$sql);
+  
+}
+else if (($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['_METHOD'] == 'DELETE_MESSAGE')) {
+  $id = (int) $_POST['messageID'];
+  $sql="DELETE FROM uzenetek WHERE id='$id';";
+  $result = mysqli_query($adatbazis,$sql);
+  
+}
 
 $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 $adatbazis->query("SET NAMES 'utf8'");
@@ -134,8 +154,16 @@ while ($row = $result->fetch_assoc()) {
   echo'<td>'.$row["ID"].'</td>';
   echo'<td>'.$row["user_name"].'</td>';
   echo'<td>'.$row["Email"].'</td>';
-  echo'<td><i class="fa fa-close"></i></td>';
-  echo'</tr>';
+  ?>
+  <td>
+  <form method="POST" onsubmit="return confirm('Biztos törölni szeretnéd?');">
+    <input type="hidden" name="_METHOD" value="DELETE_USER">
+    <input type="hidden" name="userID" value="<?php echo $row["ID"]; ?>">
+    <button type="submit" ><i class="fa fa-close"></i></button>
+</form>
+</td>
+</tr>
+  <?php
   
 }
 echo '</table>';
@@ -158,8 +186,16 @@ else if($listaz=="kodok"){
     }
     
     echo'<td>'.$row["user_id"].'</td>';
-    echo'<td><i class="fa fa-close"></i></td>';
-    echo'</tr>';
+    ?>
+  <td>
+  <form method="POST" onsubmit="return confirm('Biztos törölni szeretnéd?');">
+    <input type="hidden" name="_METHOD" value="DELETE_CODE">
+    <input type="hidden" name="codeID" value="<?php echo $row["id"]; ?>">
+    <button type="submit" ><i class="fa fa-close"></i></button>
+</form>
+</td>
+</tr>
+  <?php
     
   }
   echo '</table>';
@@ -175,9 +211,16 @@ else if($listaz=="uzenetek"){
     echo'<td>'.$row["uzenet"].'</td>';
     echo'<td>'.$row["user_name"].'</td>';
     echo'<td>'.$row["date"].'</td>';
-    echo'<td><i class="fa fa-close"></i></td>';
-    echo'</tr>';
-    
+    ?>
+  <td>
+  <form method="POST" onsubmit="return confirm('Biztos törölni szeretnéd?');">
+    <input type="hidden" name="_METHOD" value="DELETE_MESSAGE">
+    <input type="hidden" name="messageID" value="<?php echo $row["id"]; ?>">
+    <button type="submit" ><i class="fa fa-close"></i></button>
+</form>
+</td>
+</tr>
+  <?php
   }
   echo '</table>';
 }
