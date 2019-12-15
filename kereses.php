@@ -3,7 +3,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 $bentVan=$_SESSION['user_name'];
 $user_id=$_SESSION['id'];
-include('phpcodes/rating.php');
+include('php/rating.php');
 
 ?>
 
@@ -66,7 +66,7 @@ if(empty($bentVan)){
         ?>
 				    <a href="profil.php">Profil</a>
 				    <a href="kodjaim.php"> Kódjaim </a>
-				    <a href="phpcodes/logout.php">Kilépés</a>
+				    <a href="php/logout.php">Kilépés</a>
 				  </div>
         </div>
         
@@ -164,9 +164,9 @@ if (isset($_POST["keres"])){
   $page = isset($_GET['page']) ? abs((int)$_GET['page']) : 1;
   $offset = ($page-1) * $limit;
   if($hol =="cim"){
-    $sql="select id,name,kod,user_id FROM code where name like '%$mit%' order by id DESC limit $offset, $limit;";
+    $sql="select id,name,kod,user_id,leiras FROM code where name like '%$mit%' order by id DESC limit $offset, $limit;";
   }else{
-    $sql="select id,name,kod,user_id FROM code where name like '%$mit%' or leiras like '%$mit%' order by id DESC limit $offset, $limit;";
+    $sql="select id,name,kod,user_id,leiras FROM code where name like '%$mit%' or leiras like '%$mit%' order by id DESC limit $offset, $limit;";
   }
   $result=mysqli_query($adatbazis,$sql);
   
@@ -198,7 +198,10 @@ if ($adatbazis->connect_error) {
       $id=$row['id'];
       $name=$row['name'];
       $leiras=$row['leiras'];
-      $leiras = substr($leiras, 0,100) . '...';
+      if($hossz>100){
+        $leiras = substr($leiras, 0,100) . '...';
+      }
+      
       print('Cím: <b><a href=atalakit.php?id='.$id.'>'.$name.'</a></b></br>');
         print('Leírás: <b>'.$leiras.'</b></br>');
         print('Feltöltő: <b>'.$r['user_name'].'</b></br>');

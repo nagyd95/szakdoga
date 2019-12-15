@@ -6,7 +6,7 @@ $user_id=$_SESSION['id'];
 if(empty($bentVan)){
   header("location:index.php");
 }
-include('phpcodes/rating.php');
+include('php/rating.php');
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ include('phpcodes/rating.php');
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- Bootstrap CSS -->
+  
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -58,7 +58,7 @@ if(empty($bentVan)){
       <div class="dropdown-content">
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
-				    <a href="phpcodes/logout.php">Kilépés</a>
+				    <a href="php/logout.php">Kilépés</a>
 				  </div>
         </div>
         

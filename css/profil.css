@@ -25,10 +25,17 @@ a:hover{
   color:#e17055;
 }
 
-input[type=password],input[type=text]{
+input[type=password],input[type=email]{
   color:black;
   border:none;
   background: #bdc3c7;
   padding-left: 3px;
   outline: none;
+}
+#gomb{
+  background: none;
+  border: none;
+  
+  padding-left: 50px;
+  color:#e17055;
 }

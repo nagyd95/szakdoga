@@ -20,7 +20,7 @@ function alakit(index){
   return ki;
 }
 
-function* myApp(index,minden) {
+function* futtatas(index,minden) {
 
   for(m in minden){
     if(minden[m]["ifben"]==="IGEN"){
@@ -82,7 +82,7 @@ function* myApp(index,minden) {
 
 
 document.getElementById('futtat').addEventListener('click',function(e){
-  osszes=[];
+  osszesVisszateres=[];
   for(k in valtozok){
   try
     {
@@ -115,7 +115,7 @@ document.getElementById('futtat').addEventListener('click',function(e){
       }while(javaScriptkodSorok[i].trim()!=="}")
       minden=createWhileCiklus(whileCiklus); 
       minden["kezdet"]=kezdet;
-      osszes.push(minden);
+      osszesVisszateres.push(minden);
     
     }else if(javaScriptkodSorok[i].trim().split(' ')[0]==="for"){
       forciklus="";
@@ -127,7 +127,7 @@ document.getElementById('futtat').addEventListener('click',function(e){
       forciklus+=javaScriptkodSorok[i].trim()+" \n";
        minden=createForciklus(forciklus);
        minden["kezdet"]=kezdet;
-       osszes.push(minden);
+       osszesVisszateres.push(minden);
        
      }else if(javaScriptkodSorok[i].trim().split(' ')[0]==="if"){
       elagazas="";
@@ -145,10 +145,10 @@ document.getElementById('futtat').addEventListener('click',function(e){
      }
      minden=createIfElse(elagazas);
      minden["kezdet"]=kezdet;
-     osszes.push(minden);
+     osszesVisszateres.push(minden);
   }
 }
-const iterator = myApp(0,osszes);
+const iterator = futtatas(0,osszesVisszateres);
 
      setInterval(function(){
        iterator.next();

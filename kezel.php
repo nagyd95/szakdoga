@@ -15,7 +15,7 @@ $listaz="felhasznalok";
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- Bootstrap CSS -->
+  
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -63,7 +63,7 @@ if(empty($bentVan)){
         ?>
 				    <a href="profil.php">Profil</a>
 				    <a href="kodjaim.php">Kódjaim</a>
-				    <a href="phpcodes/logout.php">Kilépés</a>
+				    <a href="php/logout.php">Kilépés</a>
 				  </div>
         </div>
         
@@ -121,6 +121,7 @@ if(isset($_GET['mit'])){
 $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
 $adatbazis->query("SET NAMES 'utf8'");
 $adatbazis->query("SET CHARACTER SET UTF8");
+
 if (($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['_METHOD'] == 'DELETE_USER')) {
   $id = (int) $_POST['userID'];
   $sql="DELETE FROM user WHERE ID='$id';";
@@ -159,7 +160,7 @@ while ($row = $result->fetch_assoc()) {
   <form method="POST" onsubmit="return confirm('Biztos törölni szeretnéd?');">
     <input type="hidden" name="_METHOD" value="DELETE_USER">
     <input type="hidden" name="userID" value="<?php echo $row["ID"]; ?>">
-    <button type="submit" ><i class="fa fa-close"></i></button>
+    <button type="submit" class="torol"><i class="fa fa-close"></i></button>
 </form>
 </td>
 </tr>

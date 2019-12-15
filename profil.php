@@ -46,7 +46,7 @@ if(empty($bentVan)){
         ?>
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
-				    <a href="phpcodes/logout.php">Kilépés</a>
+				    <a href="php/logout.php">Kilépés</a>
 				  </div>
         </div>
         <?php
@@ -84,6 +84,7 @@ if(empty($bentVan)){
     }
     if(isset($_POST['emailValt'])){
       $ujemail=$_POST['ujEmail'];
+      
       if(!empty($ujemail)){
         $adatbazis=new mysqli('localhost', 'root', '', 'szakdoga');
         if ($adatbazis->connect_error) {
@@ -91,7 +92,7 @@ if(empty($bentVan)){
       }
       else
       {
-        $sql="UPDATE user SET email='$ujemail' where user_name='$bentVan'";
+        $sql="UPDATE user SET Email='$ujemail' where user_name='$bentVan';";
 				$result=mysqli_query($adatbazis,$sql);
 					
       }
@@ -182,26 +183,26 @@ else
 		<td>
 		<b>Régi jelszó:</b></td>
 		<td>
-		<input type="password" name="regi" maxlength="15" minlength="4"/>
+		<input type="password" name="regi" maxlength="20" minlength="4"/>
 		</td>
 	</tr>
 	<tr>
 		<td>
 		<b>Új jelszó:</b></td>
 		<td>
-		<input type="password" name="uj" maxlength="15" minlength="4"/>
+		<input type="password" name="uj" maxlength="20" minlength="4"/>
 		</td>
 	</tr>
 	<tr>
 		<td>
-		<b>Új jelszó megint: </b>		</td>
+		<b>Új jelszó újra: </b>		</td>
 		<td >
-			<input type="password" name="uj2" maxlength="15" minlength="4" />
+			<input type="password" name="uj2" maxlength="20" minlength="4" />
 		</td>
   </tr>
   <tr>
     <td colspan="2">
-  <a href="" name="jelszoValt">Jelszó mentése</a>
+  <input type="submit"  name="jelszoValt" value="Jelszó mentése" id="gomb">
   </td>
   </tr>
     <?php
@@ -225,12 +226,12 @@ else
 		<b>Új e-mail cím:</b></td>
     </td>
     <td>
-    <input type="text" name="ujEmail">
+    <input type="email" name="ujEmail">
 </td>
 </tr>
 <tr>
   <td colspan="2">
-  <a href="" name="emailValt" >Email mentése</a>
+  <input type="submit"  name="emailValt" value="Email mentése" id="gomb">
 </td>
 </tr>
 </form>

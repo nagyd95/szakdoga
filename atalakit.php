@@ -13,6 +13,7 @@ $user_id=$_SESSION['id'];
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type='text/javascript' src='js/site.js'></script>
   <script src="js/autoresize.js"></script>
     <script type="text/javascript">
@@ -65,7 +66,7 @@ if(empty($bentVan)){
         ?>
 				    <a href="profil.php">Profil</a>
             <a href="kodjaim.php">Kódjaim</a>
-				    <a href="phpcodes/logout.php">Kilépés</a>
+				    <a href="php/logout.php">Kilépés</a>
 				  </div>
         </div>
         
@@ -110,15 +111,36 @@ if(empty($bentVan)){
 			</div>
 			</form>
 			<hr >
-  <!-- <div class="jumbotron text-center">
-      <h1>PszeudoKód világa</h1>
-      <p>Resize this responsive page to see the effect!</p> 
-  </div> -->
+  
   <div class="container">
     <div class="row">
       <div class="col-xs-6"  style="margin:inherit">
         <h2 > Pszeudokód </h2><a href="" id='ok'> Átalakít</a> 
-        <a class=modalLink id="ment" href=#modal style="display: none;" >Mentés</a>
+        <div class="dropdown">
+        <i class="fa fa-question-circle" style="font-size:30px;color:blue" ></i>
+          <div class="dropdown-content" style="width:550px;margin-top:-200px;margin-right:-300px;padding:5px;"> 
+            <b>Segítség a szintaxishoz:</b><br>
+            <u>Értékadás:</u><br>
+            <i>Változó neve:= változó értéke</i> <b>valtozo:=10</b><br>
+            <u>Változó bekérése:</u><br>
+            <i>be:</i> majd változak felsorolni vesszővel elválasztva  <b>be: valtozo1,valtozo2</b><br>
+            <u>while ciklus</u><br>
+            <i>ciklus amíg feltéltel</i> majd új sorokba a ciklus belsejét,lezárása új sorba <i>ciklus vége</i><br><b>ciklus amíg valtozo1< valtozo2<br>&#8195;valtozo1++<br>ciklus vége</b><br> 
+            <u>For ciklus: </u><br>
+            <i> ciklus segedváltozó = kezdeti érték<b>..</b>medig</i>lezárása új sorba <i>ciklus vége</i><br><b>ciklus valtozo = 0..10<br>&#8195;valt+=5<br>ciklus vége</b><br>
+            <u>Feltétel:</u><br>
+            <i>ha feltéltel </i> majd új sorokba a feltétel belsejét, <i>ha különben feltétel</i> új sorokba a feltétel belsejét, <i>különben</i> új sorokba a feltétel belsejét majd <i>elágazás vége</i><br>
+            <b>ha valt1=valt2 <br>&#8195;valt1=10 <br> ha különben valt1< valt2<br>&#8195;valt2=100<br>különben<br>&#8195;valt1=valt2</b>
+				  </div>
+        </div>
+        <?php
+            if(!empty($bentVan)){
+              echo'<a class=modalLink id="ment" href=#modal style="display: none;" >Mentés</a>';
+            }else{
+              echo'<a id="ment"></a>';
+            }
+          ?>
+        
         
         <form action="" method="POST" >
         <?php
@@ -153,7 +175,7 @@ if(empty($bentVan)){
 
         ?>
         <form method="POST" action="">
-        <textarea rows="10" cols="50" id="textarea" name="text" title="Ide ird" class="textArea">be: A,B,C&#13;ciklus amíg A&lt;B &#13; A++&#13;ciklus vége &#13;ciklus nein = 0..10&#13; B++&#13;ciklus vége&#13;tombicsekelftars:=1,3,4,5,61&#13;ha B=A&#13; A=10&#13;ha különben B=C &#13; A=1&#13;különben&#13;A=0&#13;elágazás vége&#13;szoveg:=Hello World</textarea><br>
+        <textarea rows="10" cols="50" id="textarea" name="text" title="Ide ird" class="textArea">be: Első,Második,Harmadik&#13;ciklus amíg Első&lt;Második &#13; Első++&#13;ciklus vége &#13;ciklus i = 0..10&#13; Második++&#13;ciklus vége&#13;tömb:=1,3,4,5,61&#13;ha Második=Első&#13; Első=10&#13;ha különben Második=Harmadik &#13; Első=1&#13;különben&#13;Harmadik=0&#13;elágazás vége&#13;szöveg:=Első szöveges változóm</textarea><br>
         
         <?php
         }
@@ -163,10 +185,11 @@ if(empty($bentVan)){
         
         <div class="overlay"></div>
         <div id="modal" class="modal"  >
-          <label for="cim">Cim:</label>
+          <label for="cim">Cím:</label>
           <input type="text" name="cim"><br>
-          <label for="leiras">Leirás:</label>
+          <label for="leiras">Leírás:</label>
           <input type="text" name="leiras" class="leiras"><br>
+          
           <input type="submit" name="mentes" value="Mentés" style="
           margin-top: 25px;
           color:green;
@@ -199,7 +222,7 @@ if(empty($bentVan)){
       </div>
   </div>
   
-    <script src="app.js"></script>
+    <script src="js/atalakit.js"></script>
     <script src="js/futtat.js"></script>
     <script src="js/autoresize.js"></script>
     <script type="text/javascript">

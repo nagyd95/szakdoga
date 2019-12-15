@@ -11,7 +11,7 @@ $user_id=$_SESSION['id'];
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- Bootstrap CSS -->
+  
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous"> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Szakdoga</title>
@@ -40,7 +40,7 @@ if(empty($bentVan)){
    
     if(empty($bentVan)){
     print('<div class="menu">'.
-    '<a href="login.php">Bejelentkezes</a>'.
+    '<a href="login.php">Bejelentkezés</a>'.
     '<a href="signup.php">Regisztráció</a>'.
   '</div>');
     }
@@ -57,7 +57,7 @@ if(empty($bentVan)){
         ?>
 				    <a href="profil.php">Profil</a>
 				    <a href="kodjaim.php">Kódjaim</a>
-				    <a href="phpcodes/logout.php">Kilépés</a>
+				    <a href="php/logout.php">Kilépés</a>
 				  </div>
         </div>
         
@@ -99,11 +99,7 @@ if(empty($bentVan)){
         <a href="toplista.php">Toplista</a>
         <a href="kereses.php">Keresés</a>
         <a href="kapcsolat.php">Kapcsolat</a>
-        <!-- <input type="submit" name="fooldal" value="Főoldal"> 
-				<input type="submit" name="atalakitas" value="Kód Átalakítás" >
-				<input type="submit" name="toplista" value="Toplista">
-				<input type="submit" name="kereses" value="Keresés">		
-				<input type="submit" name="kapcsolat" value="Kapcsolat"> -->
+        
 				
 			</div>
 </form>
@@ -119,10 +115,7 @@ A pszeudokódokat alkalmazzák például a számításelméletben vagy a matemat
 Pszeudokód = „álkód”, mivel ez a leírási mód nagyon közel van a magas szintű programozási nyelvek által használt kódhoz, de egyetlen programozási nyelvvel sem azonos a formája. Mondhatjuk, hogy átmenetet képez a mondatszerű leírás és a kód (=programszöveg, forrásprogram) között. Tehát ez az emberi nyelvhez közel álló, szabályokkal kötött mondatszerű leírást jelent.</p>
 
 </div>
-  <!-- <div class="jumbotron text-center">
-      <h1>PszeudoKód világa</h1>
-      <p>Resize this responsive page to see the effect!</p> 
-  </div> -->
+  
   
    
     <script type="text/javascript">

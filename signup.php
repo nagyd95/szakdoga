@@ -14,13 +14,13 @@
       function ellenoriz(nev) 
       {
         http.abort();
-        http.open("GET", "ellenoriz.php?nev="+nev, true);
+        http.open("GET", "php/ellenoriz.php?nev="+nev, true);
         http.send();
         http.onreadystatechange=function() 
         {
           if(http.readyState==4 && http.status==200) 
           {
-            document.getElementById('neves').innerHTML = http.responseText;
+            document.getElementById('felhasznalonev_valasz').innerHTML = http.responseText;
            
           }
         }  
@@ -100,18 +100,18 @@ if(isset($_POST['reg'])){
 
 <form action="" method="POST" class="form-reg">
   <div class="tbox">
-    <input type="text" name="name" maxlength="15" minlength="4"  placeholder="Felhasználónév" onchange="ellenoriz(this.value)" <?php if($nevUres) { echo "style=\"border: 2px solid red\"";}?>><div id="neves"><?php if($nevUres) { print("<font style=\"color:red\">Név üres!</font>"); } ?> </br></div>
+    <input type="text" name="name" maxlength="15" minlength="4"  placeholder="Felhasználónév" onchange="ellenoriz(this.value)" ><div id="felhasznalonev_valasz"><?php if($nevUres) { print("<font style=\"color:red\">Név üres!</font>"); } ?> </br></div>
   </div>
 
   <div class="tbox">
-    <input type="email" name="email" maxlength="30" minlength="4"  placeholder="E-mail cím" <?php if($emailUres) { echo "style=\"border: 2px solid red\"";}?>><div id="eror"><?php if($emailUres) { print("<font style=\"color:red\">E-mail cím üres!</font>"); } ?></br></div>
+    <input type="email" name="email" maxlength="30" minlength="4"  placeholder="E-mail cím" ><div id="eror"><?php if($emailUres) { print("<font style=\"color:red\">E-mail cím üres!</font>"); } ?></br></div>
   </div>
   
   <div class="tbox">
-    <input type="password" name="pass" maxlength="15" minlength="4"  placeholder=" Jelszó" <?php if($elsoJelszoUres) { echo "style=\"border: 2px solid red\"";}?>><div id="eror"><?php if($elsoJelszoUres) { print("<font style=\"color:red\">Jelszó üres!</font>"); } ?></br></div>
+    <input type="password" name="pass" maxlength="15" minlength="4"  placeholder=" Jelszó" ><div id="eror"><?php if($elsoJelszoUres) { print("<font style=\"color:red\">Jelszó üres!</font>"); } ?></br></div>
   </div>
   <div class="tbox">
-      <input type="password" name="passagain" maxlength="15" minlength="4"  placeholder=" Jelszó újra" <?php if($masodikJelszoUres) { echo "style=\"border: 2px solid red\"";}?>><div id="eror"><?php if($masodikJelszoUres) { print("<font style=\"color:red\">Jelszó üres!</font>"); } if($sikeres) { print("<font style=\"color:green\">Sikeres regisztráció!</font>"); } if($sikertelen) { print("<font style=\"color:red\">Sikertelen regisztráció!</font>"); }?></br></div>
+      <input type="password" name="passagain" maxlength="15" minlength="4"  placeholder=" Jelszó újra" ><div id="eror"><?php if($masodikJelszoUres) { print("<font style=\"color:red\">Jelszó üres!</font>"); } if($sikeres) { print("<font style=\"color:green\">Sikeres regisztráció!</font>"); } if($sikertelen) { print("<font style=\"color:red\">Sikertelen regisztráció!</font>"); }?></br></div>
   </div>
 
   <input type="submit" class="btn" value="Regisztráció!" name="reg" >
